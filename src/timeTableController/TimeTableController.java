@@ -36,8 +36,8 @@ public class TimeTableController implements ITimeTableController{
 
 	@Override
 	public String getTeacherLogin(int timeTableId, int bookId) {
-		// TODO Auto-generated method stub
-		return null;
+		String TeacherLogin = tTDB.GetTimeTable(timeTableId).GetBooking(bookId).getLogin();
+		return TeacherLogin;
 	}
 
 	@Override
@@ -126,8 +126,14 @@ public class TimeTableController implements ITimeTableController{
 
 	@Override
 	public boolean loadDB() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean bool = true;
+		try {
+			tTDB.loadDB();
+		}catch(Exception e) {
+			System.out.print("La base de données n'a pas pu être chargé correctement.");
+			bool = false;
+		}
+		return bool;
 	}
 	
 	
