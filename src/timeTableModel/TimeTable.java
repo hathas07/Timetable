@@ -5,7 +5,7 @@ import java.util.Hashtable;
 public class TimeTable {
 	
 	private int GroupId;
-	public Hashtable<Integer, Booking> BookingDB ;
+	private Hashtable<Integer, Booking> BookingDB ;
 	
 	public TimeTable(int GroupId){
 		
@@ -32,4 +32,8 @@ public class TimeTable {
 	public void RemoveBooking(int BookingId) {
 		this.BookingDB.remove(BookingId);
 	}
-}
+	
+	public Hashtable<Integer, Booking> getBookingDB() {
+		return BookingDB;
+	}
+}	

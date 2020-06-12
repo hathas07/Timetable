@@ -2,7 +2,6 @@ package timeTableModel;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
@@ -30,12 +29,13 @@ public class Main {
 		
 
 		final String file="timeTableDB.xml";
-		TimeTableController UC=new TimeTableController(file);
-		UC.loadDB();
-		System.out.print(UC.getTeacherLogin(1, 2));
-		/*UC.addRoom(1,50);
+		TimeTableController UC=new TimeTableController(file);	
+		
+		
+		
+		UC.addRoom(1,50);
 		UC.addRoom(2,100);
-		UC.addRoom(3,150);*/
+		UC.addRoom(3,150);
 		
 		Calendar dbeg1 = new GregorianCalendar(2016,3,6,8,00);
 		Calendar dend1 = new GregorianCalendar(2016,3,6,10,00);	
@@ -57,20 +57,24 @@ public class Main {
 		Date dated4=dbeg4.getTime();
 		Date datee4=dend4.getTime();
 		
-		Booking Uno = new Booking(12, "MV", dated1,datee1,1);
-		Booking Dos = new Booking(1, "Bog", dated2,datee2,1);
-		Booking Tres = new Booking(122, "Joie", dated3,datee3,1);
-		Booking Quatro = new Booking(2, "sexe", dated4,datee4,1);
-
+		UC.addTimeTable(8);
+		UC.addBooking(8,0,"GS",dated1,datee1,1);
+		UC.addBooking(8,1,"MF",dated2,datee2,1);
+		UC.addBooking(8,2,"GS",dated3,datee3,2);
+		UC.addBooking(8,13,"MF",dated4,datee4,3);
+		Hashtable<Integer, Date> dateBegin = new Hashtable<Integer, Date>();
+		Hashtable<Integer, Date> dateEnd = new Hashtable<Integer, Date>();
+		UC.getBookingsDate(8, dateBegin, dateEnd);
 		
-		/*UC.addTimeTable(1);
-		UC.addBooking(1,0,"GS",dated1,datee1,1);
-		UC.addBooking(1,1,"MF",dated2,datee2,1);
-		UC.addBooking(1,2,"GS",dated3,datee3,2);
-		UC.addBooking(1,3,"MF",dated4,datee4,3);
-		UC.saveDB();*/
+		for(Date mot : dateBegin.values()) {
+			System.out.println(mot);
+		}
+		System.out.println();
+		for(Date mot : dateEnd.values()) {
+			System.out.println(mot);
+		}
+		UC.saveDB();
 		
-		//yo.PrintDB();
 
 	}
 }

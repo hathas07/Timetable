@@ -35,7 +35,7 @@ public class Booking {
 	public Date getDateEnd() {
 		return DateEnd;
 	}
-	public int RoomId() {
+	public int getRoomId() {
 		return RoomId;
 	}
 

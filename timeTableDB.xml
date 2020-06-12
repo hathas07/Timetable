@@ -16,10 +16,10 @@
   </Rooms>
   <TimeTables>
     <TimeTable>
-      <GroupId>1</GroupId>
+      <GroupId>8</GroupId>
       <Books>
         <Book>
-          <BookingId>3</BookingId>
+          <BookingId>13</BookingId>
           <Login>MF</Login>
           <DateBegin>08/04/2016 16:00:00</DateBegin>
           <DateEnd>08/04/2016 18:00:00</DateEnd>

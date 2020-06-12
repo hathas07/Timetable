@@ -11,12 +11,14 @@ package timeTableModel;
  */
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -31,8 +33,8 @@ public class TimeTableDB {
 	 * 
 	 */
 	private String file;
-	public Hashtable<Integer, TimeTable> TimeDB ;
-	public Hashtable<Integer, Room> RoomDB;
+	private Hashtable<Integer, TimeTable> TimeDB ;
+	private Hashtable<Integer, Room> RoomDB;
 	/**
 	 * 
 	 * Constructeur de TimeTableDB. 
@@ -90,6 +92,14 @@ public class TimeTableDB {
 		this.RoomDB.remove(RoomId);
 	}
 	
+	public Hashtable<Integer, Room> getRoomDB() {
+		return this.RoomDB;
+	}
+	
+	public Hashtable<Integer, TimeTable> getTimeDB() {
+		return this.TimeDB;
+	}
+	
 	public void PrintDB() {
 		org.jdom2.Document document = null;
 		SAXBuilder sxb = new SAXBuilder();
@@ -109,13 +119,26 @@ public class TimeTableDB {
 		
 		try{date = formatter.parse(DateS);}
 		catch(ParseException e) {
-			e.printStackTrace();
+			System.out.print(e);
 		}
 		return date;
 	}
 	
+	public String DateToString(Date date) { 
+		String DateS = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		
+		try{DateS = formatter.format(date);}
+		catch(Exception e) {
+			System.out.print(e);
+		}
+		
+		return DateS;
+	}
+ 
+	
 	public void loadDB() {
-		org.jdom2.Document document = null;
+		Document document = null;
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
 		try {
@@ -153,5 +176,60 @@ public class TimeTableDB {
 			}
 	
 		}
+	}
+	
+	public void saveDB() {
+		Element rootElt = new Element("TimeTablesDB");
+		Document document = new Document(rootElt);
+		
+			Element Rooms = new Element("Rooms");
+				for(Room room : this.getRoomDB().values()) {
+					Element Room = new Element("Room");
+						Element RRoomId = new Element("RoomId");
+							RRoomId.setText(String.valueOf(room.getRoomId()));
+						Room.addContent(RRoomId);
+						Element Capacity = new Element("Capacity");
+							Capacity.setText(String.valueOf(room.getCapacity()));
+						Room.addContent(Capacity);
+					Rooms.addContent(Room);
+				}
+			rootElt.addContent(Rooms);
+		
+			Element TimeTables = new Element("TimeTables");
+				for(TimeTable timeTable : this.getTimeDB().values()) {
+					Element TimeTable = new Element("TimeTable");
+						Element GroupId = new Element("GroupId");
+							GroupId.setText(String.valueOf(timeTable.getGroupId()));
+						TimeTable.addContent(GroupId);
+						Element Books = new Element("Books");
+							for(Booking booking : timeTable.getBookingDB().values()) {
+								Element Book = new Element("Book");
+									Element BookingId = new Element("BookingId");
+										BookingId.setText(String.valueOf(booking.getBookingId()));
+									Book.addContent(BookingId);
+									Element Login = new Element("Login");
+										Login.setText(booking.getLogin());
+									Book.addContent(Login);
+									Element DateBegin = new Element("DateBegin");
+										DateBegin.setText(this.DateToString(booking.getDateBegin()));
+									Book.addContent(DateBegin);
+									Element DateEnd = new Element("DateEnd");
+										DateEnd.setText(this.DateToString(booking.getDateEnd()));
+									Book.addContent(DateEnd);
+									Element TRoomId = new Element("RoomId");
+										TRoomId.setText(String.valueOf(booking.getRoomId()));
+									Book.addContent(TRoomId);
+								Books.addContent(Book);
+							}
+						TimeTable.addContent(Books);
+					TimeTables.addContent(TimeTable);
+				}
+			rootElt.addContent(TimeTables);
+		
+		
+		try{
+			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+			sortie.output(document, new FileOutputStream(this.getFile()));
+		}catch (java.io.IOException e){}
 	}
 }
