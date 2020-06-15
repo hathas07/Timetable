@@ -2,6 +2,8 @@ package view;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import java.awt.event.*;
 
 import timeTableController.TimeTableController;
@@ -25,24 +27,14 @@ public class LoginView extends JFrame{
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setVisible(true);
-		setSize(250, 150);
-		setLayout(new FlowLayout());
+		setSize(300, 150);
+		JPanel contentPane = (JPanel) this.getContentPane();
         setLocationRelativeTo(null);
         
         this.userController = userController;
         this.timeTableController = timeTableController;
-		
-		lbLogin = new JLabel("Login :");
-		lbPassword = new JLabel("Password :");
-		tfLogin = new JTextField();
-		tfLogin.setPreferredSize(new Dimension(150, 25));
-		pfPassword = new JPasswordField();
-		pfPassword.setPreferredSize(new Dimension(150, 25));
-		btConfirm = new JButton("Confirm");
-		
-		add(lbLogin); add(tfLogin); add(lbPassword); add(pfPassword); add(btConfirm);
-		
-		btConfirm.addActionListener((event) -> ConfirmButton());
+        
+        placeComponents(contentPane);
 		
 		this.addWindowListener(new WindowAdapter(){
 			
@@ -51,6 +43,30 @@ public class LoginView extends JFrame{
 				
 			}
 		});
+	}
+	
+	private void placeComponents(JPanel panel) {
+
+		panel.setLayout(null);
+
+		lbLogin = new JLabel("Login :");
+		lbLogin.setBounds(10, 8, 80, 35);
+		
+		lbPassword = new JLabel("Password :");
+		lbPassword.setBounds(10, 38, 80, 35);
+		
+		tfLogin = new JTextField(20);
+		tfLogin.setBounds(100, 10, 160, 28);
+		
+		pfPassword = new JPasswordField(20);
+		pfPassword.setBounds(100, 40, 160, 28);
+		btConfirm = new JButton("Confirm");
+		btConfirm.setBounds(100, 80, 100, 25);
+		
+		panel.add(lbLogin); panel.add(tfLogin); panel.add(lbPassword); panel.add(pfPassword); panel.add(btConfirm);
+		
+		btConfirm.addActionListener((event) -> ConfirmButton());
+
 	}
 	
 	public void ConfirmButton() {
