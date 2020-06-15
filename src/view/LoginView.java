@@ -40,7 +40,7 @@ public class LoginView extends JFrame{
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				
+				new MainFrame(userController, timeTableController);
 			}
 		});
 	}
@@ -94,7 +94,7 @@ public class LoginView extends JFrame{
 			default:
 				this.dispose();
 				new MainFrame(userController, timeTableController);
-				JOptionPane.showMessageDialog(LoginView.this, "Wrong Login/Password");
+				JOptionPane.showMessageDialog(LoginView.this, "Wrong Login/Password", "Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}
