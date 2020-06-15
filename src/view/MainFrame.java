@@ -1,6 +1,10 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
 import timeTableController.TimeTableController;
@@ -13,8 +17,8 @@ public class MainFrame extends JFrame{
 	private TimeTableController timeTableController;
 	
 	protected JMenuBar menuBar;
-	JMenu userMenu;
-	JMenuItem menuItemLogin, menuItemLogout, menuItemExit;
+	JMenu userMenu,helpMenu;
+	JMenuItem menuItemLogin, menuItemLogout, menuItemExit, menuItemHelp;
 	
 	public MainFrame(UserController userController,TimeTableController tTController){
 		super("Timetable");
@@ -32,43 +36,62 @@ public class MainFrame extends JFrame{
         for(String room : roomInfo) {System.out.println(room);}
                
         //CREATE PANEL
-        JPanel window = (JPanel) this.getContentPane();
         setLayout(new BorderLayout());
         
         CreateMenuBar();
         
+        this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				int choix = JOptionPane.showConfirmDialog(MainFrame.this, "Etes-vous sur de vouloir quitter ?",
+						"Choix de fermeture", JOptionPane.YES_NO_OPTION);
+				if (choix == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});   
 	}
 	
 	private void CreateMenuBar() {
         menuBar = new JMenuBar();     
-        userMenu = new JMenu("User");    
-        menuBar.add(userMenu);        
+        userMenu = new JMenu("User");
+        helpMenu = new JMenu("Help");
+        menuBar.add(userMenu); 
+        menuBar.add(helpMenu);
         
+        //sous boutons menu user
         menuItemLogin = new JMenuItem("Login");
         userMenu.add(menuItemLogin);
-        menuItemLogout = new JMenuItem("Logout");
-        userMenu.add(menuItemLogout);
+        userMenu.addSeparator();
         menuItemExit = new JMenuItem("Exit");
         userMenu.add(menuItemExit);
- 
-        this.add(menuBar, BorderLayout.NORTH);
+        menuItemHelp = new JMenuItem("Help");
+        helpMenu.add(menuItemHelp);
         
+        //evenements
         menuItemLogin.addActionListener((event) -> ActionMenuBar(menuItemLogin.getText()));
-        menuItemLogout.addActionListener((event) -> ActionMenuBar(menuItemLogout.getText()));
         menuItemExit.addActionListener((event) -> ActionMenuBar(menuItemExit.getText()));
+        menuItemHelp.addActionListener((event) -> ActionMenuBar((menuItemHelp.getText())));
+        
+        userMenu.setMnemonic('U');//ALT U pour ouvrir le menu user
+		menuItemLogin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));// ctrl L pour se log
+		
+		this.add(menuBar, BorderLayout.NORTH);
 	}
 	
+	
+	
 	private void ActionMenuBar(String text) {
+		System.out.println(text);
 		if(text.equals("Login")) {
 			new LoginView(userController, timeTableController);
 			this.dispose();
 					
-		}else if(text.equals("Logout")) {
-			System.out.println("LOGOUT");
-			
+		}else if(text.equals("Help")){
+			JOptionPane.showMessageDialog(MainFrame.this, "No help sorry....");
 		}else {
-			System.out.println("EXIT");
-			
+			this.dispose();
 		}
 	}
 
