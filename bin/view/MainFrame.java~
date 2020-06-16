@@ -1,0 +1,19 @@
+package view;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+
+import timeTableController.TimeTableController;
+import userController.UserController;
+
+public class MainFrame extends JFrame{
+
+	private static final long serialVersionUID = 1L;
+	private UserController userController;
+	private TimeTableController timeTableController;
+	public MainFrame(UserController userController,TimeTableController tTController){
+		super("Welcome to My Time Table App");
+        	setSize(1200,1000);
+        	setVisible(true);
+	}
+}

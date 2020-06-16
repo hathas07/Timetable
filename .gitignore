@@ -1,9 +1,0 @@
-.settings/
-bin
-docTimeTables/
-docUsers/
-lib/
-.classpath
-.project
-timeTableDB.xml
-userDB.xml
