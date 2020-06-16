@@ -14,7 +14,7 @@ public class StudentView extends JFrame {
 	
 	protected JMenuBar menuBar;
 	JMenu userMenu, viewMenu, helpMenu;
-	JMenuItem menuItemLogout, menuItemExit, menuItemHelp;
+	JMenuItem menuItemLogout, menuItemExit, menuItemView, menuItemHelp;
 	
 	public StudentView(UserController userController,TimeTableController tTController){
 		super("Student Timetable");
@@ -64,6 +64,8 @@ public class StudentView extends JFrame {
         userMenu.addSeparator();
         menuItemExit = new JMenuItem("Exit");
         userMenu.add(menuItemExit);
+        menuItemView = new JMenuItem("View Timetable");
+        viewMenu.add(menuItemView);
         menuItemHelp = new JMenuItem("Help");
         helpMenu.add(menuItemHelp);
         
