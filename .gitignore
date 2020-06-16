@@ -1,0 +1,10 @@
+.settings/
+bin/
+docTimeTables/
+docUsers/
+lib/
+src/
+.classpath
+.project
+timeTableDB.xml
+userBD.xml

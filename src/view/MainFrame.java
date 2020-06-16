@@ -17,8 +17,8 @@ public class MainFrame extends JFrame{
 	private TimeTableController timeTableController;
 	
 	protected JMenuBar menuBar;
-	JMenu userMenu,helpMenu;
-	JMenuItem menuItemLogin, menuItemLogout, menuItemExit, menuItemHelp;
+	protected JMenu userMenu,helpMenu;
+	protected JMenuItem menuItemLogin, menuItemLogout, menuItemExit, menuItemHelp;
 	
 	public MainFrame(UserController userController,TimeTableController tTController){
 		super("Timetable");
@@ -44,13 +44,12 @@ public class MainFrame extends JFrame{
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				int choix = JOptionPane.showConfirmDialog(MainFrame.this, "Etes-vous sur de vouloir quitter ?",
-						"Choix de fermeture", JOptionPane.YES_NO_OPTION);
+				int choix = JOptionPane.showConfirmDialog(MainFrame.this, "Etes-vous sur de vouloir quitter ?", "Fermeture", JOptionPane.YES_NO_OPTION);
 				if (choix == JOptionPane.YES_OPTION) {
 					dispose();
 				}
 			}
-		});   
+		});
 	}
 	
 	private void CreateMenuBar() {

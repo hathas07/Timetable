@@ -78,6 +78,7 @@ public class LoginView extends JFrame{
 		switch(loginRole) {
 			case "Administrator":
 				this.dispose();
+				new AdminView(userController ,timeTableController);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
 				break;
 			
@@ -88,6 +89,7 @@ public class LoginView extends JFrame{
 				
 			case "Student":
 				this.dispose();
+				new MainFrame(userController, timeTableController);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
 				break;
 				
