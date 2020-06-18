@@ -77,7 +77,7 @@ public class LoginView extends JFrame{
 		
 		switch(loginRole) {
 			case "Administrator":
-				new AdminView(userController ,timeTableController);
+				new AdminView(userController ,timeTableController, enteredLogin);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
 				this.dispose();
 				break;

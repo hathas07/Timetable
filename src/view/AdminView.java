@@ -18,8 +18,9 @@ public class AdminView extends JFrame {
 	protected JMenuBar menuBar;
 	protected JMenu userMenu,helpMenu,adminRoomMenu,adminGroupMenu,adminUserMenu;
 	protected JMenuItem mILogout,mIExit,mIHelp, mIRoomAdd, mIRoomDel, mIUserDel, mIAdminAdd, mITeacherAdd, mIStudentAdd, mIGroupAdd, mIGroupDel, mIGroupManage;
+	protected String adminLogin;
 	
-	public AdminView(UserController userController, TimeTableController timeTableController) {
+	public AdminView(UserController userController, TimeTableController timeTableController, String adminLogin) {
 		super("Timetable - Administrator");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 600);
@@ -28,6 +29,7 @@ public class AdminView extends JFrame {
         
 		this.userController = userController;
 		this.timeTableController = timeTableController;
+		this.adminLogin = adminLogin;
 		
 		CreateMenuBar();
 		AssignButtonFunction();
@@ -92,16 +94,16 @@ public class AdminView extends JFrame {
 	    mIRoomAdd.addActionListener((event) -> ActionAddRoom());
 	    mIRoomDel.addActionListener((event) -> ActionDeleteRoom()); 
 	    
-	    /*
-	    mIGroupAdd.addActionListener((event) -> );
-	    mIGroupDel.addActionListener((event) -> );
-	    mIGroupManage.addActionListener((event) -> );
 	    
-	    mIUserDel.addActionListener((event) -> );
-	    mITeacherAdd.addActionListener((event) -> );
-	    mIStudentAdd.addActionListener((event) -> );
-	    mIAdminAdd.addActionListener((event) -> );
-	    */
+	    mIGroupAdd.addActionListener((event) -> ActionAddGroup());
+	    mIGroupDel.addActionListener((event) -> ActionDeleteGroup());
+	    mIGroupManage.addActionListener((event) -> ActionManageGroup());
+	    
+	    mIUserDel.addActionListener((event) -> ActionDeleteUser());
+	    mITeacherAdd.addActionListener((event) -> ActionAddTeacher());
+	    mIStudentAdd.addActionListener((event) -> ActionAddStudent());
+	    mIAdminAdd.addActionListener((event) -> ActionAddAdmin());
+	    
 	}
 	
 	private void ActionUserMenu(String buttonName) {
@@ -124,14 +126,7 @@ public class AdminView extends JFrame {
 
 	private void ActionAddRoom() {
 		//Creation fenetre
-		JFrame inputData = new JFrame("Add a room");
-		inputData.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		inputData.setType(Window.Type.UTILITY);
-		inputData.setResizable(false);
-		inputData.setAlwaysOnTop(true);
-		inputData.setVisible(true);
-		inputData.setSize(300, 150);
-		inputData.setLocationRelativeTo(null);
+		JFrame inputData = CreateWindow("Add a room");
 		JPanel contentPane = (JPanel) inputData.getContentPane();
 		contentPane.setLayout(null);
 		
@@ -165,5 +160,66 @@ public class AdminView extends JFrame {
 	
 	private void ActionDeleteRoom() {
 		
+	}
+	
+	private void ActionAddGroup() {
+		JFrame inputData = CreateWindow("Add a group");
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(null);
+		
+		JLabel lbGroupID = new JLabel("Group Id:");
+		lbGroupID.setBounds(10, 8, 80, 35);
+		
+		JTextField tfGroupID = new JTextField();
+		tfGroupID.setBounds(100, 10, 160, 28);
+		
+		JButton btConfirm = new JButton("Apply");
+		btConfirm.setBounds(100, 80, 100, 25);
+		
+		contentPane.add(lbGroupID); contentPane.add(tfGroupID); contentPane.add(btConfirm);
+		
+		//Action bouton
+		btConfirm.addActionListener((event) -> {
+			int groupID = Integer.parseInt(tfGroupID.getText());
+			this.userController.addGroup(this.adminLogin, groupID);
+			this.userController.saveDB();
+			inputData.dispose();
+		});
+	}
+	
+	private void ActionDeleteGroup() {
+		
+	}
+	
+	private void ActionManageGroup() {
+		
+	}
+	
+	private void ActionAddStudent() {
+		
+	}
+	
+	private void ActionAddTeacher() {
+		
+	}
+	
+	private void ActionAddAdmin() {
+		
+	}
+	
+	private void ActionDeleteUser() {
+		
+	}
+	
+	private JFrame CreateWindow(String windowName) {
+		JFrame window = new JFrame(windowName);
+		window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		window.setType(Window.Type.UTILITY);
+		window.setResizable(false);
+		window.setAlwaysOnTop(true);
+		window.setVisible(true);
+		window.setSize(300, 150);
+		window.setLocationRelativeTo(null);		
+		return window;
 	}
 }

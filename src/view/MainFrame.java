@@ -32,6 +32,9 @@ public class MainFrame extends JFrame{
         String[] userInfo =  userController.usersToString();
         for(String user : userInfo) {System.out.println(user);}
         
+        String[] groupsInfo =  userController.groupsToString();
+        for(String group : groupsInfo) {System.out.println(group);}
+        
         String[] roomInfo = tTController.roomsToString();
         for(String room : roomInfo) {System.out.println(room);}
                

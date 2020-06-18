@@ -2,6 +2,9 @@
 <UsersDB>
   <Groups>
     <Group>
+      <groupId>5</groupId>
+    </Group>
+    <Group>
       <groupId>1</groupId>
     </Group>
   </Groups>
