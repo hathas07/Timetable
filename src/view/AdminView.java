@@ -100,9 +100,9 @@ public class AdminView extends JFrame {
 	    mIGroupManage.addActionListener((event) -> ActionManageGroup());
 	    
 	    mIUserDel.addActionListener((event) -> ActionDeleteUser());
-	    mITeacherAdd.addActionListener((event) -> ActionAddTeacher());
-	    mIStudentAdd.addActionListener((event) -> ActionAddStudent());
-	    mIAdminAdd.addActionListener((event) -> ActionAddAdmin());
+	    mITeacherAdd.addActionListener((event) -> ActionAddUser("Teacher"));
+	    mIStudentAdd.addActionListener((event) -> ActionAddUser("Student"));
+	    mIAdminAdd.addActionListener((event) -> ActionAddUser("Admin"));
 	    
 	}
 	
@@ -126,18 +126,18 @@ public class AdminView extends JFrame {
 
 	private void ActionAddRoom() {
 		//Creation fenetre
-		JFrame inputData = CreateWindow("Add a room");
+		JFrame inputData = CreateWindow("Add a room", 150);
 		JPanel contentPane = (JPanel) inputData.getContentPane();
 		contentPane.setLayout(null);
 		
 		JLabel lbRoomID = new JLabel("Room Id:");
 		lbRoomID.setBounds(10, 8, 80, 35);
 		
-		JLabel lbRoomCapacity = new JLabel("Capacity:");
-		lbRoomCapacity.setBounds(10, 38, 80, 35);
-		
 		JTextField tfRoomID = new JTextField();
 		tfRoomID.setBounds(100, 10, 160, 28);
+		
+		JLabel lbRoomCapacity = new JLabel("Capacity:");
+		lbRoomCapacity.setBounds(10, 38, 80, 35);
 		
 		JTextField tfRoomCapacity = new JTextField();
 		tfRoomCapacity.setBounds(100, 40, 160, 28);
@@ -163,7 +163,7 @@ public class AdminView extends JFrame {
 	}
 	
 	private void ActionAddGroup() {
-		JFrame inputData = CreateWindow("Add a group");
+		JFrame inputData = CreateWindow("Add a group", 150);
 		JPanel contentPane = (JPanel) inputData.getContentPane();
 		contentPane.setLayout(null);
 		
@@ -195,30 +195,89 @@ public class AdminView extends JFrame {
 		
 	}
 	
-	private void ActionAddStudent() {
+	private void ActionAddUser(String rank) {
+		//Creation fenetre
+		JFrame inputData = CreateWindow("Add a " + rank, 250);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(null);
 		
-	}
-	
-	private void ActionAddTeacher() {
+		JLabel lbLogin = new JLabel("Login:");
+		lbLogin.setBounds(10, 8, 80, 35);
 		
-	}
-	
-	private void ActionAddAdmin() {
+		JTextField tfLogin= new JTextField();
+		tfLogin.setBounds(100, 10, 160, 28);
 		
+		JLabel lbID = new JLabel("ID:");
+		lbID.setBounds(10, 38, 80, 35);
+		
+		JTextField tfID = new JTextField();
+		tfID.setBounds(100, 40, 160, 28);
+		
+		JLabel lbName = new JLabel("Name:");
+		lbName.setBounds(10, 68, 80, 35);
+		
+		JTextField tfName = new JTextField();
+		tfName.setBounds(100, 70, 160, 28);
+		
+		JLabel lbSurname = new JLabel("Surname:");
+		lbSurname.setBounds(10, 98, 80, 35);
+		
+		JTextField tfSurname = new JTextField();
+		tfSurname.setBounds(100, 100, 160, 28);
+		
+		JLabel lbPwd = new JLabel("Password:");
+		lbPwd.setBounds(10, 128, 80, 35);
+		
+		JPasswordField pfPwd = new JPasswordField();
+		pfPwd.setBounds(100, 130, 160, 28);
+		
+		JButton btConfirm = new JButton("Apply");
+		btConfirm.setBounds(100, 175, 100, 25);
+		
+		contentPane.add(lbName); contentPane.add(tfName);
+		contentPane.add(lbSurname); contentPane.add(tfSurname);
+		contentPane.add(lbID); contentPane.add(tfID);
+		contentPane.add(lbLogin); contentPane.add(tfLogin);
+		contentPane.add(lbPwd); contentPane.add(pfPwd);
+		contentPane.add(btConfirm);
+		
+		//Action bouton
+		btConfirm.addActionListener((event) -> {
+			int id = Integer.parseInt(tfID.getText());
+			String login = tfLogin.getText();
+			String name = tfName.getText();
+			String surname = tfSurname.getText();
+			String pwd = pfPwd.getText();
+			switch(rank) {
+				case "Student":
+					this.userController.addStudent(this.adminLogin, login, id, name, surname, pwd);
+					break;
+				
+				case "Admin":
+					this.userController.addAdmin(this.adminLogin, login, id, name, surname, pwd);
+					break;
+					
+				case "Teacher":
+					this.userController.addTeacher(this.adminLogin, login, id, name, surname, pwd);
+					break;
+			}
+			this.userController.saveDB();
+			inputData.dispose();
+		});
 	}
 	
 	private void ActionDeleteUser() {
 		
 	}
 	
-	private JFrame CreateWindow(String windowName) {
+	private JFrame CreateWindow(String windowName, int windowLength) {
 		JFrame window = new JFrame(windowName);
 		window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		window.setType(Window.Type.UTILITY);
 		window.setResizable(false);
 		window.setAlwaysOnTop(true);
 		window.setVisible(true);
-		window.setSize(300, 150);
+		window.setSize(300, windowLength);
 		window.setLocationRelativeTo(null);		
 		return window;
 	}

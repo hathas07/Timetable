@@ -10,11 +10,19 @@
   </Groups>
   <Students>
     <Student>
-      <login>NL</login>
-      <firstname>Nicolas</firstname>
-      <surname>Lepetit</surname>
-      <pwd>prout</pwd>
-      <studentId>2002</studentId>
+      <login>LN</login>
+      <firstname>Lila</firstname>
+      <surname>Nickler</surname>
+      <pwd>ieu</pwd>
+      <studentId>6</studentId>
+      <groupId>-1</groupId>
+    </Student>
+    <Student>
+      <login>MA</login>
+      <firstname>Manuel</firstname>
+      <surname>Ardouin</surname>
+      <pwd>meme</pwd>
+      <studentId>8</studentId>
       <groupId>-1</groupId>
     </Student>
     <Student>
@@ -26,6 +34,14 @@
       <groupId>1</groupId>
     </Student>
     <Student>
+      <login>NL</login>
+      <firstname>Nicolas</firstname>
+      <surname>Lepetit</surname>
+      <pwd>prout</pwd>
+      <studentId>2002</studentId>
+      <groupId>-1</groupId>
+    </Student>
+    <Student>
       <login>EM</login>
       <firstname>Merly</firstname>
       <surname>Erwan</surname>
@@ -33,21 +49,29 @@
       <studentId>2</studentId>
       <groupId>-1</groupId>
     </Student>
+    <Student>
+      <login>BL</login>
+      <firstname>Benjamin</firstname>
+      <surname>Leroux</surname>
+      <pwd>ayaya</pwd>
+      <studentId>27</studentId>
+      <groupId>-1</groupId>
+    </Student>
   </Students>
   <Teachers>
-    <Teacher>
-      <login>GS</login>
-      <firstname>Grand</firstname>
-      <surname>Schtroumpf</surname>
-      <pwd>salsepareille</pwd>
-      <teacherId>1001</teacherId>
-    </Teacher>
     <Teacher>
       <login>MF</login>
       <firstname>Morgan</firstname>
       <surname>Freeman</surname>
       <pwd>iknowall</pwd>
       <teacherId>1002</teacherId>
+    </Teacher>
+    <Teacher>
+      <login>GS</login>
+      <firstname>Grand</firstname>
+      <surname>Schtroumpf</surname>
+      <pwd>salsepareille</pwd>
+      <teacherId>1001</teacherId>
     </Teacher>
   </Teachers>
   <Administrators>
@@ -57,6 +81,13 @@
       <surname>Reeves</surname>
       <pwd>redpill</pwd>
       <adminId>2</adminId>
+    </Administrator>
+    <Administrator>
+      <login>RD</login>
+      <firstname>Raphael</firstname>
+      <surname>Delecluse</surname>
+      <pwd>oof</pwd>
+      <adminId>9</adminId>
     </Administrator>
     <Administrator>
       <login>KF</login>
