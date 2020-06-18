@@ -17,7 +17,7 @@ public class AdminView extends JFrame {
 	
 	protected JMenuBar menuBar;
 	protected JMenu userMenu,helpMenu,adminRoomMenu,adminGroupMenu,adminUserMenu;
-	protected JMenuItem mILogout,mIExit,mIHelp, mIRoomAdd, miRoomDel, mIUserDel, mIAdminAdd, mITeacherAdd, mIStudentAdd, mIGroupAdd, mIGroupDel, mIGroupManage;
+	protected JMenuItem mILogout,mIExit,mIHelp, mIRoomAdd, mIRoomDel, mIUserDel, mIAdminAdd, mITeacherAdd, mIStudentAdd, mIGroupAdd, mIGroupDel, mIGroupManage;
 	
 	public AdminView(UserController userController, TimeTableController timeTableController) {
 		super("Timetable - Administrator");
@@ -30,35 +30,140 @@ public class AdminView extends JFrame {
 		this.timeTableController = timeTableController;
 		
 		CreateMenuBar();
+		AssignButtonFunction();
 	}
 
 	private void CreateMenuBar() {
-		 menuBar = new JMenuBar();     
-	     userMenu = new JMenu("User");
-	     helpMenu = new JMenu("Help");
-	     adminRoomMenu = new JMenu("Manage Rooms");
-	     adminGroupMenu = new JMenu("Manage Groups");
-	     adminUserMenu = new JMenu("Manage Users");
+		menuBar = new JMenuBar();     
+	    userMenu = new JMenu("User");
+	    helpMenu = new JMenu("Help");
+	    adminRoomMenu = new JMenu("Manage Rooms");
+	    adminGroupMenu = new JMenu("Manage Groups");
+	    adminUserMenu = new JMenu("Manage Users");
 	     
-	     menuBar.add(userMenu); 
-	     menuBar.add(adminRoomMenu);
-	     menuBar.add(adminGroupMenu);
-	     menuBar.add(adminUserMenu);
-	     menuBar.add(helpMenu);
+	    menuBar.add(userMenu); 
+	    menuBar.add(adminRoomMenu);
+	    menuBar.add(adminGroupMenu);
+	    menuBar.add(adminUserMenu);
+	    menuBar.add(helpMenu);
 	        
-	     //sous boutons menu user
-	     mILogout = new JMenuItem("Logout");
-	     userMenu.add(mILogout);
-	     userMenu.addSeparator();
-	     mIExit = new JMenuItem("Exit");
-	     userMenu.add(mIExit);
-	     mIHelp = new JMenuItem("Help");
-	     helpMenu.add(mIHelp);
-	        
-	     userMenu.setMnemonic('U');//ALT U pour ouvrir le menu user
-	     mILogout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));// ctrl L pour se log
-			
-	     this.add(menuBar, BorderLayout.NORTH);
+	    //sous boutons menu user
+	    mILogout = new JMenuItem("Logout");
+	    mIExit = new JMenuItem("Exit");
+	    mIHelp = new JMenuItem("Help");
+	    userMenu.add(mILogout);
+	    userMenu.addSeparator();
+	    userMenu.add(mIExit);
+	    helpMenu.add(mIHelp);
+	     
+	    //Sous boutons menu admin room
+	    mIRoomAdd = new JMenuItem("Add Room");
+	    mIRoomDel = new JMenuItem("Delete Room");
+	    adminRoomMenu.add(mIRoomAdd);
+	    adminRoomMenu.add(mIRoomDel);
+	    
+	    //Sous boutons menu admin group
+	    mIGroupAdd = new JMenuItem("Add Group");
+	    mIGroupDel = new JMenuItem("Delete Group");
+	    mIGroupManage = new JMenuItem("Manage Groups");
+	    adminGroupMenu.add(mIGroupAdd);
+	    adminGroupMenu.add(mIGroupDel);
+	    adminGroupMenu.add(mIGroupManage);
+	     
+	    //Sous boutons menu admin user
+	    mIUserDel = new JMenuItem("Delete User");
+	    mIAdminAdd = new JMenuItem("Add Admin");
+	    mITeacherAdd = new JMenuItem("Add Teacher");
+	    mIStudentAdd = new JMenuItem("Add Student");
+	    adminUserMenu.add(mIStudentAdd);
+	    adminUserMenu.add(mITeacherAdd);
+	    adminUserMenu.add(mIAdminAdd);
+	    adminUserMenu.add(mIUserDel);
+
+	    this.add(menuBar, BorderLayout.NORTH);
 	}
 	
+	private void AssignButtonFunction(){
+	    mILogout.addActionListener((event) -> ActionUserMenu(mILogout.getText()));
+	    mIExit.addActionListener((event) -> ActionUserMenu(mIExit.getText()));
+	    mIHelp.addActionListener((event) -> ActionUserMenu(mIHelp.getText()));
+	    
+	    
+	    mIRoomAdd.addActionListener((event) -> ActionAddRoom());
+	    mIRoomDel.addActionListener((event) -> ActionDeleteRoom()); 
+	    
+	    /*
+	    mIGroupAdd.addActionListener((event) -> );
+	    mIGroupDel.addActionListener((event) -> );
+	    mIGroupManage.addActionListener((event) -> );
+	    
+	    mIUserDel.addActionListener((event) -> );
+	    mITeacherAdd.addActionListener((event) -> );
+	    mIStudentAdd.addActionListener((event) -> );
+	    mIAdminAdd.addActionListener((event) -> );
+	    */
+	}
+	
+	private void ActionUserMenu(String buttonName) {
+		switch(buttonName) {
+			case "Logout":
+				new MainFrame(userController, timeTableController);
+				JOptionPane.showMessageDialog(AdminView.this, "Disconnection");
+				this.dispose();
+				break;
+				
+			case "Exit":
+				this.dispose();
+				break;
+				
+			case "Help":
+				JOptionPane.showMessageDialog(AdminView.this, "No help sorry....");
+				break;
+		}
+	}
+
+	private void ActionAddRoom() {
+		//Creation fenetre
+		JFrame inputData = new JFrame("Add a room");
+		inputData.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		inputData.setType(Window.Type.UTILITY);
+		inputData.setResizable(false);
+		inputData.setAlwaysOnTop(true);
+		inputData.setVisible(true);
+		inputData.setSize(300, 150);
+		inputData.setLocationRelativeTo(null);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(null);
+		
+		JLabel lbRoomID = new JLabel("Room Id:");
+		lbRoomID.setBounds(10, 8, 80, 35);
+		
+		JLabel lbRoomCapacity = new JLabel("Capacity:");
+		lbRoomCapacity.setBounds(10, 38, 80, 35);
+		
+		JTextField tfRoomID = new JTextField();
+		tfRoomID.setBounds(100, 10, 160, 28);
+		
+		JTextField tfRoomCapacity = new JTextField();
+		tfRoomCapacity.setBounds(100, 40, 160, 28);
+		
+		JButton btConfirm = new JButton("Apply");
+		btConfirm.setBounds(100, 80, 100, 25);
+		
+		contentPane.add(lbRoomID); contentPane.add(tfRoomID); contentPane.add(lbRoomCapacity); contentPane.add(tfRoomCapacity); contentPane.add(btConfirm);
+
+		//Action bouton
+		btConfirm.addActionListener((event) -> {
+			int roomID = Integer.parseInt(tfRoomID.getText());
+			int roomCapacity = Integer.parseInt(tfRoomCapacity.getText());
+			this.timeTableController.addRoom(roomID, roomCapacity);
+			this.timeTableController.saveDB();
+			inputData.dispose();
+		});
+
+	}
+	
+	private void ActionDeleteRoom() {
+		
+	}
 }

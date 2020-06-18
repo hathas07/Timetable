@@ -68,18 +68,16 @@ public class MainFrame extends JFrame{
         menuItemHelp = new JMenuItem("Help");
         helpMenu.add(menuItemHelp);
         
-        //evenements
-        menuItemLogin.addActionListener((event) -> ActionMenuBar(menuItemLogin.getText()));
-        menuItemExit.addActionListener((event) -> ActionMenuBar(menuItemExit.getText()));
-        menuItemHelp.addActionListener((event) -> ActionMenuBar((menuItemHelp.getText())));
-        
         userMenu.setMnemonic('U');//ALT U pour ouvrir le menu user
 		menuItemLogin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));// ctrl L pour se log
 		
+		//evenement
+		menuItemLogin.addActionListener((event) -> ActionMenuBar(menuItemLogin.getText()));
+		menuItemExit.addActionListener((event) -> ActionMenuBar(menuItemExit.getText()));
+		menuItemHelp.addActionListener((event) -> ActionMenuBar(menuItemHelp.getText()));
+		
 		this.add(menuBar, BorderLayout.NORTH);
 	}
-	
-	
 	
 	private void ActionMenuBar(String text) {
 		System.out.println(text);
