@@ -159,7 +159,24 @@ public class AdminView extends JFrame {
 	}
 	
 	private void ActionDeleteRoom() {
+		JFrame inputData = CreateWindow("Delete a room", 500);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(new FlowLayout());
 		
+		String[] infoRoom = this.timeTableController.roomsIdToString();
+		JList listRoom = new JList(infoRoom);
+		listRoom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listRoom.setSelectedIndex(0);
+		
+		contentPane.add(new JScrollPane(listRoom));
+		
+		JButton confirm = new JButton("Apply");
+		contentPane.add(confirm);
+		
+		confirm.addActionListener((event) -> {
+			int roomSelected = Integer.parseInt((String) listRoom.getSelectedValue());
+			timeTableController.removeRoom(roomSelected);
+		});
 	}
 	
 	private void ActionAddGroup() {
