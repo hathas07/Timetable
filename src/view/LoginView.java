@@ -93,7 +93,7 @@ public class LoginView extends JFrame{
 				
 			case "Student":
 				int group = userController.getStudentGroup(enteredLogin);
-				if(group == 0) {
+				if(group != -1) {
 					new StudentView(userController, timeTableController, userController.getStudentGroup(enteredLogin));
 					JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
 				}else {
