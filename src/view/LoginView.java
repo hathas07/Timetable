@@ -80,6 +80,7 @@ public class LoginView extends JFrame{
 		
 		switch(loginRole) {
 			case "Administrator":
+				new AdminView(userController, timeTableController, enteredLogin);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
 				this.dispose();
 				break;
@@ -91,8 +92,14 @@ public class LoginView extends JFrame{
 				break;
 				
 			case "Student":
-				new StudentView(userController, timeTableController, userController.getStudentGroup(enteredLogin));
-				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
+				int group = userController.getStudentGroup(enteredLogin);
+				if(group == 0) {
+					new StudentView(userController, timeTableController, userController.getStudentGroup(enteredLogin));
+					JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
+				}else {
+					new MainFrame(userController, timeTableController);
+					JOptionPane.showMessageDialog(LoginView.this, "No group associated", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 				this.dispose();
 				break;
 				

@@ -224,7 +224,7 @@ public class AdminView extends JFrame {
 		btConfirm.addActionListener((event) -> {
 			int groupID = Integer.parseInt(tfGroupID.getText());
 			this.userController.addGroup(this.adminLogin, groupID);
-			this.userController.saveDB();
+			this.timeTableController.addTimeTable(groupID);
 			inputData.dispose();
 		});
 	}
@@ -252,6 +252,7 @@ public class AdminView extends JFrame {
 			for(String group : groupsSelected) {
 				int groupINT = Integer.parseInt(group);
 				this.userController.removeGroup(this.adminLogin, groupINT);
+				this.timeTableController.removeTimeTable(groupINT);
 			}
 			
 			inputData.dispose();
