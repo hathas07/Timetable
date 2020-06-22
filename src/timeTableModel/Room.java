@@ -3,23 +3,26 @@ package timeTableModel;
 public class Room {
 	/**
 	 * 
-	 * Le fichier contenant la base de donnÃ©es.
+	 * RoomId = l'identifiant de la room.
+	 * Capacity = la capacité de la room.
 	 * 
 	 */
 	private int RoomId;
 	private int Capacity;
+	
 	/**
 	 * 
-	 * Constructeur de TimeTableDB. 
+	 * Constructeur de Room. 
 	 * 
-	 * @param file
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
+	 * @param L'identifiant de la room, la capacité de la room
+	 * 		
 	 */
 	public Room(int RoomId, int Capacity){
 		
 		this.setRoomId(RoomId);
 		this.setCapacity(Capacity);
 	}
+	
 	/**
 	 * Getter de RoomId
 	 * 
@@ -29,6 +32,7 @@ public class Room {
 	public int getRoomId() {
 		return RoomId;
 	}
+	
 	/**
 	 * Getter de Capacity
 	 * 
@@ -38,6 +42,7 @@ public class Room {
 	public int getCapacity() {
 		return Capacity;
 	}
+	
 	/**
 	 * Setter de RoomId
 	 * 
@@ -47,6 +52,7 @@ public class Room {
 	public void setRoomId(int RoomId) {
 		this.RoomId = RoomId;
 	}
+	
 	/**
 	 * Setter de Capacity
 	 * 

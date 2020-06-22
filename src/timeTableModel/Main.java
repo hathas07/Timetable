@@ -31,9 +31,13 @@ public class Main {
 		final String file="timeTableDB.xml";
 		TimeTableController UC=new TimeTableController(file);	
 		
+		String oyy [] = UC.roomsToString();
 		
+		for(String mot : oyy) {
+			System.out.println(mot);
+		}
 		
-		UC.addRoom(1,50);
+		/*UC.addRoom(1,50);
 		UC.addRoom(2,100);
 		UC.addRoom(3,150);
 		
@@ -62,17 +66,18 @@ public class Main {
 		UC.addBooking(8,1,"MF",dated2,datee2,1);
 		UC.addBooking(8,2,"GS",dated3,datee3,2);
 		UC.addBooking(8,13,"MF",dated4,datee4,3);
+		
 		Hashtable<Integer, Date> dateBegin = new Hashtable<Integer, Date>();
 		Hashtable<Integer, Date> dateEnd = new Hashtable<Integer, Date>();
 		UC.getBookingsDate(8, dateBegin, dateEnd);
 		
-		for(Date mot : dateBegin.values()) {
-			System.out.println(mot);
+		for(Date date : dateBegin.values()) {
+			System.out.println(date);
 		}
 		System.out.println();
-		for(Date mot : dateEnd.values()) {
-			System.out.println(mot);
-		}
+		for(Date date : dateEnd.values()) {
+			System.out.println(date);
+		}*/
 		UC.saveDB();
 		
 

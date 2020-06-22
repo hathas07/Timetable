@@ -33,6 +33,9 @@ public class TimeTableController implements ITimeTableController{
 	public TimeTableController(String tTfile) {
 		TimeTableDB tTDB=new TimeTableDB(tTfile);
 		this.tTDB=tTDB;
+		
+		//On charge la DB à la création du controler 
+		this.loadDB();
 	}
 
 	@Override
@@ -101,8 +104,18 @@ public class TimeTableController implements ITimeTableController{
 	public boolean addRoom(int roomId, int capacity) {
 		boolean result = true;
 		try {
+			
+			//On regarde si la roomId existe déjà dans la DB
+			for(int roomid: this.tTDB.getRoomDB().keySet()) {
+				if(roomid == roomId) {
+					throw new Exception("Impossible d'inserer l'emploi du temps : "+roomId+" existe déjà");
+				}
+			}
 			Room room = new Room(roomId, capacity);
 			this.tTDB.AddRoom(room);
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -115,7 +128,20 @@ public class TimeTableController implements ITimeTableController{
 	public boolean removeRoom(int roomId) {
 		boolean result = true;
 		try {
+			//Si l'id n'existe pas dans la hashtable, alors elle restera inchangé donc pas besoin de chercher si elle existe
 			this.tTDB.RemoveRoom(roomId);
+			
+			//On supprime toute les réservations qui avaient lieu dans cette room :
+			for(TimeTable timetable : this.tTDB.getTimeDB().values()) {
+				for(Booking book : timetable.getBookingDB().values()) {
+					if(book.getRoomId() == roomId) {
+						this.removeBook(timetable.getGroupId(), book.getBookingId());
+					}
+				}
+			}
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -140,8 +166,18 @@ public class TimeTableController implements ITimeTableController{
 	public boolean addTimeTable(int timeTableId) {
 		boolean result = true;
 		try {
+			
+			//On regarde si la timeTableId existe déjà dans la DB
+			for(int timetableid: this.tTDB.getTimeDB().keySet()) {
+				if(timetableid == timeTableId) {
+					throw new Exception("Impossible d'inserer l'emploi du temps : "+timeTableId+" existe déjà");
+				}
+			}
 			TimeTable timeTable = new TimeTable(timeTableId);
 			this.tTDB.AddTimeTable(timeTable);
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -154,7 +190,12 @@ public class TimeTableController implements ITimeTableController{
 	public boolean removeTimeTable(int timeTableId) {
 		boolean result = true;
 		try {
+			
+			//Pareil ici, si l'id n'existe pas ce n'est pas grave
 			this.tTDB.RemoveTimeTable(timeTableId);
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -167,8 +208,25 @@ public class TimeTableController implements ITimeTableController{
 	public boolean addBooking(int timeTableId, int bookingId, String login, Date dateBegin, Date dateEnd, int roomId) {
 		boolean result = true;
 		try {
+			
+			for(Booking booking: this.tTDB.GetTimeTable(timeTableId).getBookingDB().values()) {
+				//On cherche si deux résevations se chechauvent pour un groupe
+				if(dateBegin.compareTo(booking.getDateBegin()) >= 0  && dateBegin.compareTo(booking.getDateEnd()) < 0 ||
+					dateEnd.compareTo(booking.getDateBegin()) > 0 && dateEnd.compareTo(booking.getDateEnd()) <= 0) {
+					throw new Exception("Impossible d'inserer la reservation : Deux reservations se chevauchent");
+				}
+				
+				//On regarde si la bookingId existe déjà dans la DB
+				if(booking.getBookingId() == bookingId) {
+					throw new Exception("Impossible d'inserer la reservation : "+bookingId+" existe déjà");
+				}
+			}
+			
 			Booking booking = new Booking(bookingId,login,dateBegin,dateEnd,roomId);
 			this.tTDB.GetTimeTable(timeTableId).AddBooking(booking);
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -194,7 +252,11 @@ public class TimeTableController implements ITimeTableController{
 	public boolean removeBook(int timeTableId, int bookId) {
 		boolean result = true;
 		try {
+			//Pareil ici, si l'id n'existe pas ce n'est pas grave
 			this.tTDB.GetTimeTable(timeTableId).RemoveBooking(bookId);
+			
+			//On sauvegarde à chaque modification
+			this.saveDB();
 		}
 		catch(Exception e) {
 			System.out.println(e);

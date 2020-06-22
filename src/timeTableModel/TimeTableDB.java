@@ -29,12 +29,15 @@ import org.jdom2.output.XMLOutputter;
 public class TimeTableDB {
 	/**
 	 * 
-	 * Le fichier contenant la base de donnÃ©es.
+	 * file = Le fichier contenant la base de données.
+	 * TimeDB = Une hashtable contenant les emplois du temps.
+	 * RoomDB = Une hashtable contenant les rooms.
 	 * 
 	 */
 	private String file;
 	private Hashtable<Integer, TimeTable> TimeDB ;
 	private Hashtable<Integer, Room> RoomDB;
+	
 	/**
 	 * 
 	 * Constructeur de TimeTableDB. 
@@ -49,6 +52,7 @@ public class TimeTableDB {
 		this.TimeDB = new Hashtable<Integer, TimeTable>();
 		this.RoomDB = new Hashtable<Integer, Room>();
 	}
+	
 	/**
 	 * Getter de file
 	 * 
@@ -58,6 +62,7 @@ public class TimeTableDB {
 	public String getFile() {
 		return file;
 	}
+	
 	/**
 	 * Setter de file
 	 * 
@@ -68,38 +73,90 @@ public class TimeTableDB {
 		this.file = file;
 	}
 	
+	/**
+	 * Ajout d'un emploi du temps dans la DB
+	 * 
+	 * @param timeTable
+	 * 		L'emploi du temps que l'on souhaite ajouter.
+	 */
 	public void AddTimeTable(TimeTable timeTable) {
 		this.TimeDB.put(timeTable.getGroupId(), timeTable);
 	}
 	
+	/**
+	 * Retourne l'emploi du temps qui correspond à GroupId.
+	 * 
+	 * @param GroupId
+	 * 		L'identifiant du groupe correspondant à l'emploi du temps recherché.
+	 */
 	public TimeTable GetTimeTable(int GroupId) {
 		return this.TimeDB.get(GroupId);
 	}
 	
+	/**
+	 * Supprime un emploi du temps de la hashtable
+	 * 
+	 * @param GroupId
+	 * 		L'identifiant du groupe lié à l'emploi du temps que l'on veut supprimer.
+	 */
 	public void RemoveTimeTable(int GroupId) {
 		this.TimeDB.remove(GroupId);
 	}
 	
+	/**
+	 * Ajout d'une salle dans la DB
+	 * 
+	 * @param room
+	 * 		La salle que l'on veut ajouter.
+	 */
 	public void AddRoom(Room room) {
 		this.RoomDB.put(room.getRoomId(), room);
 	}
 	
+	/**
+	 * Retourne la salle qui correspond à RoomId.
+	 * 
+	 * @param RoomId
+	 * 		L'identifiant de la salle recherché.
+	 */
 	public Room GetRoom(int RoomId) {
 		return this.RoomDB.get(RoomId);
 	}
 	
+	/**
+	 * Supprime une salle de la hashtable
+	 * 
+	 * @param RoomId
+	 * 		L'identifiant de la salle à supprimer.
+	 */
 	public void RemoveRoom(int RoomId) {
 		this.RoomDB.remove(RoomId);
 	}
 	
+	/**
+	 * Getter de RoomDB
+	 * 
+	 * @return 
+	 * 		La hashtable contenant les rooms.
+	 */
 	public Hashtable<Integer, Room> getRoomDB() {
 		return this.RoomDB;
 	}
 	
+	/**
+	 * Getter de TimeDB
+	 * 
+	 * @return 
+	 * 		La hashtable contenant les emplois du temps.
+	 */
 	public Hashtable<Integer, TimeTable> getTimeDB() {
 		return this.TimeDB;
 	}
 	
+	/**
+	 * Fonction permettant d'afficher dans la console le contenue du fichier XML
+	 * 
+	 */
 	public void PrintDB() {
 		org.jdom2.Document document = null;
 		SAXBuilder sxb = new SAXBuilder();
@@ -113,6 +170,14 @@ public class TimeTableDB {
 		}catch (java.io.IOException e) {System.out.println(e);}
 	}
 	
+	/**
+	 * Convertion d'un format string à un format Date
+	 * 
+	 * @param DateS
+	 * 		Une date au format String.
+	 * @return
+	 * 		Une date au format Date.
+	 */
 	public Date StringToDate(String DateS) {
 		Date date = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -124,6 +189,15 @@ public class TimeTableDB {
 		return date;
 	}
 	
+	/**
+	 * 
+	  * Convertion d'un format Date à un format String
+	 * 
+	 * @param Date
+	 * 		Une date au format Date.
+	 * @return
+	 * 		Une date au format String.
+	 */
 	public String DateToString(Date date) { 
 		String DateS = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
@@ -135,8 +209,12 @@ public class TimeTableDB {
 		
 		return DateS;
 	}
- 
 	
+	/**
+	 * Chargement de la DB contenue dans le fichier XML
+	 * 
+	 *  
+	 */
 	public void loadDB() {
 		Document document = null;
 		Element rootElt;
@@ -178,6 +256,11 @@ public class TimeTableDB {
 		}
 	}
 	
+	/**
+	 * 
+	 * Sauvegarde de la DB dans le fichier XML
+	 *  
+	 */
 	public void saveDB() {
 		Element rootElt = new Element("TimeTablesDB");
 		Document document = new Document(rootElt);
