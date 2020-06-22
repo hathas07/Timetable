@@ -2,7 +2,6 @@ package view;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import java.awt.event.*;
 
@@ -33,6 +32,8 @@ public class LoginView extends JFrame{
         
         this.userController = userController;
         this.timeTableController = timeTableController;
+		timeTableController.loadDB();
+
         
         placeComponents(contentPane);
 		
@@ -69,6 +70,8 @@ public class LoginView extends JFrame{
 
 	}
 	
+
+	@SuppressWarnings("deprecation")
 	public void ConfirmButton() {
 		enteredLogin = tfLogin.getText();
 		enteredPassword  = pfPassword.getText();
@@ -77,26 +80,27 @@ public class LoginView extends JFrame{
 		
 		switch(loginRole) {
 			case "Administrator":
-				new AdminView(userController ,timeTableController, enteredLogin);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
 				this.dispose();
 				break;
 			
 			case "Teacher":
-				this.dispose();
+				new TeacherView(userController, timeTableController);
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Teacher");
+				this.dispose();
 				break;
 				
 			case "Student":
-				new MainFrame(userController, timeTableController);
+				new StudentView(userController, timeTableController, userController.getStudentGroup(enteredLogin));
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
 				this.dispose();
 				break;
 				
 			default:
-				this.dispose();
 				new MainFrame(userController, timeTableController);
 				JOptionPane.showMessageDialog(LoginView.this, "Wrong Login/Password", "Error", JOptionPane.INFORMATION_MESSAGE);
+				this.dispose();
+
 		}
 		
 	}
