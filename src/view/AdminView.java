@@ -1,17 +1,33 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Window;
 
-import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import timeTableController.TimeTableController;
 import userController.UserController;
 
 public class AdminView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private UserController userController;
 	private TimeTableController timeTableController;
 	
@@ -125,6 +141,7 @@ public class AdminView extends JFrame {
 	}
 
 	private void ActionAddRoom() {
+			
 		//Creation fenetre
 		JFrame inputData = CreateWindow("Add a room", 150);
 		JPanel contentPane = (JPanel) inputData.getContentPane();
@@ -159,14 +176,14 @@ public class AdminView extends JFrame {
 	}
 	
 	private void ActionDeleteRoom() {
-		JFrame inputData = CreateWindow("Delete a room", 500);
+		JFrame inputData = CreateWindow("Delete room(s)", 250);
 		JPanel contentPane = (JPanel) inputData.getContentPane();
 		contentPane.setLayout(new FlowLayout());
 		
 		String[] infoRoom = this.timeTableController.roomsIdToString();
-		JList listRoom = new JList(infoRoom);
-		listRoom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listRoom.setSelectedIndex(0);
+		JList<String> listRoom = new JList<String>(infoRoom);
+		listRoom.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listRoom.setPreferredSize(new Dimension(100, 200));
 		
 		contentPane.add(new JScrollPane(listRoom));
 		
@@ -174,8 +191,16 @@ public class AdminView extends JFrame {
 		contentPane.add(confirm);
 		
 		confirm.addActionListener((event) -> {
-			int roomSelected = Integer.parseInt((String) listRoom.getSelectedValue());
-			timeTableController.removeRoom(roomSelected);
+			
+			List<String> roomSelected = new ArrayList<String>();
+			roomSelected = listRoom.getSelectedValuesList();
+			
+			for(String room : roomSelected) {
+				int roomINT = Integer.parseInt(room);
+				timeTableController.removeRoom(roomINT);
+			}
+			
+			inputData.dispose();
 		});
 	}
 	
@@ -205,11 +230,66 @@ public class AdminView extends JFrame {
 	}
 	
 	private void ActionDeleteGroup() {
+		JFrame inputData = CreateWindow("Delete group(s)", 250);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(new FlowLayout());
 		
+		String[] infoGroup = this.userController.groupsIdToString();
+		JList<String> listGroup = new JList<String>(infoGroup);
+		listGroup.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listGroup.setPreferredSize(new Dimension(100, 200));
+		
+		contentPane.add(new JScrollPane(listGroup));
+		
+		JButton confirm = new JButton("Apply");
+		contentPane.add(confirm);
+		
+		confirm.addActionListener((event) -> {
+			
+			List<String> groupsSelected = new ArrayList<String>();
+			groupsSelected = listGroup.getSelectedValuesList();
+			
+			for(String group : groupsSelected) {
+				int groupINT = Integer.parseInt(group);
+				this.userController.removeGroup(this.adminLogin, groupINT);
+			}
+			
+			inputData.dispose();
+		});
 	}
 	
 	private void ActionManageGroup() {
+		JFrame inputData = CreateWindow("Associate student to a group", 500);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(new FlowLayout());
 		
+		JLabel lbStudent = new JLabel("Student selected:");
+		contentPane.add(lbStudent);
+		
+		String[] infoUser = this.userController.studentsLoginToString();
+		JList<String> listUsers = new JList<String>(infoUser);
+		listUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listUsers.setPreferredSize(new Dimension(100, 200));
+		contentPane.add(new JScrollPane(listUsers));
+		
+		JLabel lbGroup = new JLabel("Group selected:");
+		contentPane.add(lbGroup);
+		
+		String[] infoGroup = this.userController.groupsIdToString();
+		JList<String> listGroup = new JList<String>(infoGroup);
+		listGroup.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listGroup.setPreferredSize(new Dimension(100, 200));
+		contentPane.add(new JScrollPane(listGroup));
+		
+		JButton confirm = new JButton("Apply");
+		contentPane.add(confirm);
+		
+		confirm.addActionListener((event) -> {
+			int selectedGroup = Integer.parseInt(listGroup.getSelectedValue());
+			String selectedStudent = listUsers.getSelectedValue();
+			this.userController.associateStudToGroup(this.adminLogin, selectedStudent, selectedGroup);
+			inputData.dispose();
+		});
 	}
 	
 	private void ActionAddUser(String rank) {
@@ -284,6 +364,31 @@ public class AdminView extends JFrame {
 	}
 	
 	private void ActionDeleteUser() {
+		JFrame inputData = CreateWindow("Delete user(s)", 250);
+		JPanel contentPane = (JPanel) inputData.getContentPane();
+		contentPane.setLayout(new FlowLayout());
+		
+		String[] infoUser = this.userController.usersLoginToString();
+		JList<String> listUsers = new JList<String>(infoUser);
+		listUsers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listUsers.setPreferredSize(new Dimension(100, 200));
+		
+		contentPane.add(new JScrollPane(listUsers));
+		
+		JButton confirm = new JButton("Apply");
+		contentPane.add(confirm);
+		
+		confirm.addActionListener((event) -> {
+			
+			List<String> usersSelected = new ArrayList<String>();
+			usersSelected = listUsers.getSelectedValuesList();
+			
+			for(String user : usersSelected) {
+				if(this.adminLogin != user) {this.userController.removeUser(this.adminLogin, user);}
+			}
+			
+			inputData.dispose();
+		});
 		
 	}
 	

@@ -15,7 +15,7 @@
       <surname>Nickler</surname>
       <pwd>ieu</pwd>
       <studentId>6</studentId>
-      <groupId>-1</groupId>
+      <groupId>5</groupId>
     </Student>
     <Student>
       <login>MA</login>
@@ -23,7 +23,7 @@
       <surname>Ardouin</surname>
       <pwd>meme</pwd>
       <studentId>8</studentId>
-      <groupId>-1</groupId>
+      <groupId>5</groupId>
     </Student>
     <Student>
       <login>BS</login>
@@ -31,7 +31,7 @@
       <surname>Summers</surname>
       <pwd>stake</pwd>
       <studentId>2001</studentId>
-      <groupId>1</groupId>
+      <groupId>5</groupId>
     </Student>
     <Student>
       <login>NL</login>
@@ -39,14 +39,6 @@
       <surname>Lepetit</surname>
       <pwd>prout</pwd>
       <studentId>2002</studentId>
-      <groupId>-1</groupId>
-    </Student>
-    <Student>
-      <login>EM</login>
-      <firstname>Merly</firstname>
-      <surname>Erwan</surname>
-      <pwd>oui</pwd>
-      <studentId>2</studentId>
       <groupId>-1</groupId>
     </Student>
     <Student>
@@ -59,13 +51,6 @@
     </Student>
   </Students>
   <Teachers>
-    <Teacher>
-      <login>MF</login>
-      <firstname>Morgan</firstname>
-      <surname>Freeman</surname>
-      <pwd>iknowall</pwd>
-      <teacherId>1002</teacherId>
-    </Teacher>
     <Teacher>
       <login>GS</login>
       <firstname>Grand</firstname>
