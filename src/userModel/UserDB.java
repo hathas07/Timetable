@@ -85,10 +85,10 @@ public class  UserDB {
 		Document document = null ;
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
-		String nameDB = this.getFile();
 		
 		try {
-			document = sxb.build(new File(nameDB));
+
+			document = sxb.build(new File(this.getFile()));
 		}catch(Exception e) 
 		{
 			System.out.println(e);
