@@ -182,7 +182,7 @@ public class UserController implements IUserController
 				if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouveau groupe est bien un administrateur
 				{
 					Group group = new Group (groupId,0);
-					admin.createGroup(group);
+					userDB.addGroup(group);
 					result = true ;
 					
 					this.saveDB();
@@ -225,7 +225,7 @@ public class UserController implements IUserController
 					if (userDB.group_exist(groupId)== false)
 					{
 						group = new Group (groupId,0);
-						userDB.addGroup(groupId, group);
+						userDB.addGroup(group);
 					}else 
 					{
 						group = userDB.getGroup(groupId);

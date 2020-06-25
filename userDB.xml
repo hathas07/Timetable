@@ -75,6 +75,10 @@
   </Students>
   <Groups>
     <Group>
+      <groupId>8</groupId>
+      <nbStudent>0</nbStudent>
+    </Group>
+    <Group>
       <groupId>2</groupId>
       <nbStudent>2</nbStudent>
     </Group>

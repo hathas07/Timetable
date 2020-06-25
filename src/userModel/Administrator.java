@@ -57,7 +57,8 @@ public class Administrator extends User{
 	 */
 	public void createGroup  (Group group) 
 	{
-		userDB.addGroup(group.groupId, group);
+		this.userDB.addGroup(group);
+
 	}
 	
 	/**

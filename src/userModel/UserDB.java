@@ -140,7 +140,7 @@ public class  UserDB {
 				int groupId = Integer.parseInt(currentGroup.getChildText("groupId"));
 				int nbStudent = Integer.parseInt(currentGroup.getChildText("nbStudent"));
 				Group group = new Group (groupId,nbStudent);
-				this.addGroup(groupId, group);
+				this.addGroup(group);
 			}
 		}
 	}
@@ -409,9 +409,9 @@ public class  UserDB {
 	 * @param groupId
 	 * @param group
 	 */
-	public void addGroup (int groupId, Group group)
+	public void addGroup (Group group)
 	{
-		hashGroup.put(groupId,group); 
+		hashGroup.put(group.getGroupId(group),group); 
 	}
 }
 	
