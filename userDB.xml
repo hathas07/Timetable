@@ -64,14 +64,6 @@
       <studentId>2002</studentId>
       <groupId>2</groupId>
     </Student>
-    <Student>
-      <login>DR</login>
-      <firstname>Raphael</firstname>
-      <surname>Delecluse</surname>
-      <pwd>master</pwd>
-      <studentId>99</studentId>
-      <groupId>-1</groupId>
-    </Student>
   </Students>
   <Groups>
     <Group>

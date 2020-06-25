@@ -385,7 +385,7 @@ public class AdminView extends JFrame {
 			usersSelected = listUsers.getSelectedValuesList();
 			
 			for(String user : usersSelected) {
-				if(this.adminLogin != user) {this.userController.removeUser(this.adminLogin, user);}
+				if(this.adminLogin != user) {this.userController.removeUser(this.adminLogin, user.substring(7));}
 			}
 			
 			inputData.dispose();

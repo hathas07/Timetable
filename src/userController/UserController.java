@@ -159,7 +159,7 @@ public class UserController implements IUserController
 		admin =(Administrator) userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (user.getType(admin) == "Administrator") // Si la personne qui souhaite supprimer un utilisateur est bien un administrateur
+				if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite supprimer un utilisateur est bien un administrateur
 				{
 					userDB.removeUser(userLogin);
 					result = true;
