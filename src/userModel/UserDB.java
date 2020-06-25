@@ -110,7 +110,7 @@ public class  UserDB {
 				String firstName = currentAdmin.getChildText("firstname"); 
 				String surName = currentAdmin.getChildText("surname"); 
 				String pwd = currentAdmin.getChildText("pwd");
-				int id = Integer.parseInt(currentAdmin.getChildText("adminId"));;
+				int id = Integer.parseInt(currentAdmin.getChildText("adminId"));
 				Administrator admin = new Administrator (login,firstName, surName, pwd,id);
 				this.addAdmin(admin);
 			}
