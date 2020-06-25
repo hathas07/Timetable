@@ -16,20 +16,16 @@
   </Rooms>
   <TimeTables>
     <TimeTable>
-      <GroupId>8</GroupId>
-      <Books />
-    </TimeTable>
-    <TimeTable>
-      <GroupId>995</GroupId>
-      <Books />
-    </TimeTable>
-    <TimeTable>
-      <GroupId>5</GroupId>
-      <Books />
-    </TimeTable>
-    <TimeTable>
-      <GroupId>15</GroupId>
-      <Books />
+      <GroupId>2</GroupId>
+      <Books>
+        <Book>
+          <BookingId>1</BookingId>
+          <Login>MF</Login>
+          <DateBegin>25/06/2020 08:00:39</DateBegin>
+          <DateEnd>25/06/2020 15:00:39</DateEnd>
+          <RoomId>3</RoomId>
+        </Book>
+      </Books>
     </TimeTable>
     <TimeTable>
       <GroupId>1</GroupId>

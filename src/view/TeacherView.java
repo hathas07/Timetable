@@ -195,7 +195,7 @@ public class TeacherView extends JFrame {
 			int bookGrp, bookRoom, maxID;
 			bookRoom = Integer.parseInt(room.getSelectedItem().toString()); //recuperation de la room dans sa comboBox
 			bookGrp = Integer.parseInt(groupBox.getSelectedItem().toString()); //recuperation du groupe dans sa comboBox
-			maxID = timeTableController.getBookingsMaxId(bookGrp); //recuperation de l'ID de reservation max
+			maxID = timeTableController.getBookingsMaxId(bookGrp) +1; //recuperation de l'ID de reservation max et ajout de 1 pour ne pas utilié deux fois les mêmes ID
 			
 			//recuperation des dates indiquées dans les comboBox
 			bookDateBegin=setDate(day.getSelectedItem().toString(),month.getSelectedItem().toString(),year.getSelectedItem().toString(),hoursBegin.getSelectedItem().toString(),minBegin.getSelectedItem().toString());
