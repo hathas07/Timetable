@@ -39,7 +39,7 @@ public class TeacherView extends JFrame {
 	JComboBox<String> groupBox= new JComboBox<>(groups);
 	
 	public TeacherView(UserController userController,TimeTableController tTController, String login){
-		super("Student Timetable");
+		super("Teacher Timetable");
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(1800, 800);
         setVisible(true);
