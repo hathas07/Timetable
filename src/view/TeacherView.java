@@ -46,7 +46,7 @@ public class TeacherView extends JFrame {
         setLocationRelativeTo(null);
         this.userController = userController;
         this.timeTableController = tTController;
-        userLogin=login; //on recupere le login du professeur connecté
+        this.userLogin=login; //on recupere le login du professeur connecté
         
         String[] userInfo =  userController.usersToString();
         for(String user : userInfo) {System.out.println(user);}
@@ -341,7 +341,7 @@ public class TeacherView extends JFrame {
 		String heureTxt;
 		String[] id;
 		boolean[] isEmpty = {true,true,true,true,true}; //test pour chaque jour
-		
+
 		grpID=Integer.parseInt(groupBox.getSelectedItem().toString()); //on recupere l'emploi du temps du groupe selectionné dans la comboBox
 		timeTable.removeAll();
 		timeTable.updateUI();

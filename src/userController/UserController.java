@@ -111,7 +111,7 @@ public class UserController implements IUserController
 		try {
 			if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouvel utilisateur est bien un administrateur
 			{
-				teacher = new Teacher (newteacherLogin,firstname,surname,pwd,teacherID);
+				Teacher teacher = new Teacher (newteacherLogin,firstname,surname,pwd,teacherID);
 				if (userDB.login_contain(newteacherLogin) == false) // Si le login n'existe pas déjà
 				{
 					admin.createTeacher(teacher,userDB); 
@@ -179,7 +179,7 @@ public class UserController implements IUserController
 		admin = userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (user.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouveau groupe est bien un administrateur
+				if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouveau groupe est bien un administrateur
 				{
 					Group group = new Group (groupId,0);
 					admin.createGroup(group);
@@ -285,7 +285,7 @@ public class UserController implements IUserController
 			for (User user : userDB.getUsers())
 			{
 				user = userDB.getUser(user.getLogin(user));
-				tab[i] = new StringBuilder("Login: "+user.getLogin(user)).toString();
+				tab[i] = new StringBuilder(user.getLogin(user)).toString();
 				i++; 
 			}
 		} catch (Exception e)
@@ -306,7 +306,7 @@ public class UserController implements IUserController
 				user = userDB.getUser(user.getLogin(user));
 				if (user.getType(user)== "Student")
 				{
-					tab[i] = new StringBuilder("Login: "+user.getLogin(user)).toString();
+					tab[i] = new StringBuilder(user.getLogin(user)).toString();
 					i++; 
 				}	
 			}
@@ -327,7 +327,7 @@ public class UserController implements IUserController
 			{
 				group = userDB.getGroup(group.getGroupId(group));
 
-					tab[i] = new StringBuilder("Group ID: "+group.getGroupId(group)).toString();
+					tab[i] = String.valueOf(group.getGroupId(group));
 					i++; 	
 			}
 		} catch (Exception e)
