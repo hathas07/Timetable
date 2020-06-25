@@ -16,6 +16,10 @@
   </Rooms>
   <TimeTables>
     <TimeTable>
+      <GroupId>5</GroupId>
+      <Books />
+    </TimeTable>
+    <TimeTable>
       <GroupId>1</GroupId>
       <Books>
         <Book>

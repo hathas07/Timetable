@@ -90,6 +90,8 @@ public class UserController implements IUserController
 				{
 					admin.createAdmin(admini,userDB); 
 					result = true; 
+					
+					this.saveDB();
 				}
 			}
 			
@@ -114,6 +116,8 @@ public class UserController implements IUserController
 				{
 					admin.createTeacher(teacher,userDB); 
 					result = true; 
+					
+					this.saveDB();
 				}
 			}
 			
@@ -138,6 +142,8 @@ public class UserController implements IUserController
 					
 					admin.createStudent(student,userDB); 
 					result = true; 
+					
+					this.saveDB();
 				}
 			}
 			
@@ -157,6 +163,8 @@ public class UserController implements IUserController
 				{
 					userDB.removeUser(userLogin);
 					result = true;
+					
+					this.saveDB();
 				} 
 		}
 		catch (Exception e) 
@@ -176,6 +184,8 @@ public class UserController implements IUserController
 					Group group = new Group (groupId,0);
 					admin.createGroup(group);
 					result = true ;
+					
+					this.saveDB();
 				}
 		}
 		catch (Exception e) 
@@ -193,6 +203,8 @@ public class UserController implements IUserController
 				{
 					userDB.removeGroup(groupId);
 					result = true;
+					
+					this.saveDB();
 				} 
 		}
 		catch (Exception e) 
@@ -222,6 +234,8 @@ public class UserController implements IUserController
 					student = userDB.getStudent(studentLogin);
 					student.addStudentToGroup(student,group);
 					result = true;
+					
+					this.saveDB();
 				} 
 		}
 		catch (Exception e) 

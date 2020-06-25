@@ -25,28 +25,28 @@
   </Administrators>
   <Teachers>
     <Teacher>
-      <login>GS</login>
-      <firstname>Grand</firstname>
-      <surname>Schtroumpf</surname>
-      <pwd>salsepareille</pwd>
-      <teacherId>1001</teacherId>
-    </Teacher>
-    <Teacher>
       <login>MF</login>
       <firstname>Morgan</firstname>
       <surname>Freeman</surname>
       <pwd>iknowall</pwd>
       <teacherId>1002</teacherId>
     </Teacher>
+    <Teacher>
+      <login>GS</login>
+      <firstname>Grand</firstname>
+      <surname>Schtroumpf</surname>
+      <pwd>salsepareille</pwd>
+      <teacherId>1001</teacherId>
+    </Teacher>
   </Teachers>
   <Students>
     <Student>
-      <login>NL</login>
-      <firstname>Nicolas</firstname>
-      <surname>Lepetit</surname>
-      <pwd>prout</pwd>
-      <studentId>2002</studentId>
-      <groupId>2</groupId>
+      <login>LN</login>
+      <firstname>Lila</firstname>
+      <surname>Nickler</surname>
+      <pwd>pwd</pwd>
+      <studentId>2003</studentId>
+      <groupId>1</groupId>
     </Student>
     <Student>
       <login>BS</login>
@@ -57,12 +57,20 @@
       <groupId>1</groupId>
     </Student>
     <Student>
-      <login>LN</login>
-      <firstname>Lila</firstname>
-      <surname>Nickler</surname>
-      <pwd>pwd</pwd>
-      <studentId>2003</studentId>
-      <groupId>1</groupId>
+      <login>NL</login>
+      <firstname>Nicolas</firstname>
+      <surname>Lepetit</surname>
+      <pwd>prout</pwd>
+      <studentId>2002</studentId>
+      <groupId>2</groupId>
+    </Student>
+    <Student>
+      <login>DR</login>
+      <firstname>Raphael</firstname>
+      <surname>Delecluse</surname>
+      <pwd>master</pwd>
+      <studentId>99</studentId>
+      <groupId>-1</groupId>
     </Student>
   </Students>
   <Groups>

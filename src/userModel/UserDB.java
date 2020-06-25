@@ -120,7 +120,7 @@ public class  UserDB {
 				String firstName = currentTeacher.getChildText("firstname"); 
 				String surName = currentTeacher.getChildText("surname"); 
 				String pwd = currentTeacher.getChildText("pwd");
-				int id = Integer.parseInt(currentTeacher.getChildText("teacherId"));;
+				int id = Integer.parseInt(currentTeacher.getChildText("teacherId"));
 				Teacher teacher = new Teacher (login,firstName, surName, pwd,id);
 				this.addTeacher(teacher);
 		}
