@@ -21,29 +21,29 @@
         <Book>
           <BookingId>4</BookingId>
           <Login>GS</Login>
-          <DateBegin>13/06/2020 15:15:36</DateBegin>
-          <DateEnd>13/06/2020 16:16:36</DateEnd>
+          <DateBegin>01/07/2020 15:15:36</DateBegin>
+          <DateEnd>01/07/2020 16:16:36</DateEnd>
           <RoomId>3</RoomId>
         </Book>
         <Book>
           <BookingId>3</BookingId>
           <Login>MF</Login>
-          <DateBegin>08/04/2016 16:00:00</DateBegin>
-          <DateEnd>08/04/2016 18:00:00</DateEnd>
+          <DateBegin>02/07/2020 16:00:00</DateBegin>
+          <DateEnd>02/07/2020 18:00:00</DateEnd>
           <RoomId>3</RoomId>
         </Book>
         <Book>
           <BookingId>1</BookingId>
           <Login>MF</Login>
-          <DateBegin>06/04/2016 13:00:00</DateBegin>
-          <DateEnd>06/04/2016 17:00:00</DateEnd>
+          <DateBegin>29/06/2020 13:00:00</DateBegin>
+          <DateEnd>29/06/2020 17:00:00</DateEnd>
           <RoomId>1</RoomId>
         </Book>
         <Book>
           <BookingId>0</BookingId>
           <Login>GS</Login>
-          <DateBegin>06/04/2016 08:00:00</DateBegin>
-          <DateEnd>06/04/2016 10:00:00</DateEnd>
+          <DateBegin>30/06/2020 08:00:00</DateBegin>
+          <DateEnd>30/06/2020 10:00:00</DateEnd>
           <RoomId>1</RoomId>
         </Book>
       </Books>

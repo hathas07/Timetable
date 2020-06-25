@@ -20,10 +20,14 @@ public class Teacher extends User {
 		
 	}
 
+	/**
+	 * Renvoie l'identifiant du professeur en paramètre 
+	 * @param user
+	 * @return entier
+	 */
 	public int getTeacherId (User user)
 	{
 		Teacher teacher = (Teacher) user; 
 		return teacher.teacherId; 
 	}
-	
 }

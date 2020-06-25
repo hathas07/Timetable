@@ -10,8 +10,8 @@ import timeTableModel.*;
  * Elle contient un attribut correspondant à la base de données d'emplois du temps que vous allez créer.
  * Elle contient toutes les fonctions de l'interface ITimeTableController que vous devez implémenter.
  * 
- * @author Jose Mennesson (Mettre à jour)
- * @version 04/2016 (Mettre à jour)
+ * @author Rapha�l Delecluse
+ * @version 06/2020
  * 
  */
 

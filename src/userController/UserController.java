@@ -8,8 +8,8 @@ import userModel.*;
  * Elle contient un attribut correspondant √† la base de donn√©es utilisateurs que vous allez cr√©er.
  * Elle contient toutes les fonctions de l'interface IUserController que vous devez impl√©menter.
  * 
- * @author Jose Mennesson (Mettre √† jour)
- * @version 04/2016 (Mettre √† jour)
+ * @author Lila Nickler
+ * @version 06/2020
  * 
  */
 
@@ -19,8 +19,13 @@ public class UserController implements IUserController
 {
 	
 	/**
-	 * Contient une instance de base de donn√©es d'utilisateurs
-	 * 
+	 * Contient:
+	 * une instance de base de donn√©es d'utilisateurs
+	 * une instance d'utilisateur
+	 * une instance d'adminstrateur
+	 * une instance de professeur 
+	 * une instance d'Ètudiant
+	 * une instance de groupe
 	 */
 	private UserDB userDB=null;
 	private User user = null; 
@@ -42,14 +47,12 @@ public class UserController implements IUserController
 		this.loadDB();
 	}
 
-	@Override
 	public String getUserName(String userLogin) {
 
 		User user = userDB.getUser(userLogin);
 		return user.getFirstName(user);
 	}
-
-	@Override
+	
 	public String getUserClass(String userLogin, String userPwd) {
 		
 		String result =""; 
@@ -69,24 +72,21 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public int getStudentGroup(String studentLogin) {
 		
 		student = (Student) userDB.getStudent(studentLogin);
 		return student.getStudentGroup(student);
 	}
-
-	@Override
 	public boolean addAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname,
 			String pwd) {
 		
 		boolean result =false ; 
 		admin = userDB.getAdmin(adminLogin);
 		try {
-			if (admin.getType(admin)== "Administrator")
+			if (admin.getType(admin)== "Administrator") // Si la personne qui souhaite ajouter un nouvel utilisateur est bien un administrateur
 			{
 				Administrator admini = new Administrator (newAdminlogin,firstname,surname,pwd,adminID);
-				if (userDB.login_contain(newAdminlogin) == false)
+				if (userDB.login_contain(newAdminlogin) == false) // Si le login n'existe pas dÈj‡ 
 				{
 					admin.createAdmin(admini,userDB); 
 					result = true; 
@@ -100,7 +100,6 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public boolean addTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname,
 			String surname, String pwd) {
 		
@@ -108,10 +107,10 @@ public class UserController implements IUserController
 		admin =(Administrator) userDB.getAdmin(adminLogin);
 		
 		try {
-			if (admin.getType(admin) == "Administrator")
+			if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouvel utilisateur est bien un administrateur
 			{
 				teacher = new Teacher (newteacherLogin,firstname,surname,pwd,teacherID);
-				if (userDB.login_contain(newteacherLogin) == false)
+				if (userDB.login_contain(newteacherLogin) == false) // Si le login n'existe pas dÈj‡
 				{
 					admin.createTeacher(teacher,userDB); 
 					result = true; 
@@ -125,18 +124,18 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public boolean addStudent(String adminLogin, String newStudentLogin, int studentID, String firstname,
 			String surname, String pwd) {
 		boolean result = false ; 
 		admin =(Administrator) userDB.getAdmin(adminLogin);
 		
 		try {
-			if (admin.getType(admin) == "Administrator")
+			if (admin.getType(admin) == "Administrator")// Si la personne qui souhaite ajouter un nouvel utilisateur est bien un administrateur
 			{
 				student = new Student (newStudentLogin,firstname,surname,pwd,studentID,-1);
-				if (userDB.login_contain(newStudentLogin) == false)
+				if (userDB.login_contain(newStudentLogin) == false) // Si le login n'existe pas dÈj‡
 				{
+					
 					admin.createStudent(student,userDB); 
 					result = true; 
 				}
@@ -149,13 +148,12 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
 		
 		admin =(Administrator) userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (user.getType(admin) == "Administrator")
+				if (user.getType(admin) == "Administrator") // Si la personne qui souhaite supprimer un utilisateur est bien un administrateur
 				{
 					userDB.removeUser(userLogin);
 					result = true;
@@ -169,12 +167,11 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
 		admin = userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (user.getType(admin) == "Administrator")
+				if (user.getType(admin) == "Administrator") // Si la personne qui souhaite ajouter un nouveau groupe est bien un administrateur
 				{
 					Group group = new Group (groupId,0);
 					admin.createGroup(group);
@@ -188,12 +185,11 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
-	public boolean removeGroup(String adminLogin, int groupId) {
+	public boolean removeGroup(String adminLogin, int groupId) { 
 		admin = userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (admin.getType(admin) == "Administrator")
+				if (admin.getType(admin) == "Administrator")// Si la personne qui souhaite supprimer un nouveau groupe est bien un administrateur
 				{
 					userDB.removeGroup(groupId);
 					result = true;
@@ -207,12 +203,11 @@ public class UserController implements IUserController
 		return result;
 	} 
 
-	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
 		admin = userDB.getAdmin(adminLogin);
 		boolean result = false;
 		try {
-				if (admin.getType(admin) == "Administrator")
+				if (admin.getType(admin) == "Administrator") // Si la personne qui souhaite faire l'action est bien un administrateur
 				{
 
 					if (userDB.group_exist(groupId)== false)
@@ -237,7 +232,6 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public String[] usersToString() {
 	
 		String[] tab = new String[userDB.size_UserDB()]; 
@@ -246,18 +240,17 @@ public class UserController implements IUserController
 			for (User user : userDB.getUsers())
 			{
 				user = userDB.getUser(user.getLogin(user));
-				if (admin.getType(user) == "Administrator")
+				if (user.getType(user) == "Administrator") // Si l'utilisateur actuel est un administrateur
 				{
-					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Administrator ID: "+ admin.getAdminId(user)).toString();
+					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Administrator ID: "+ ((Administrator) user).getAdminId(user)).toString();
 				}
-				
-				if (user.getType(user) == "Teacher")
+				if (user.getType(user) == "Teacher")// Si l'utilisateur actuel est un professeur
 				{
-					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Teacher ID: "+ teacher.getTeacherId(user)).toString();
+					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Teacher ID: "+ ((Teacher) user).getTeacherId(user)).toString();
 				}
-				if (user.getType(user) == "Student")
+				if (user.getType(user) == "Student")// Si l'utilisateur actuel est un Ètudiant
 				{
-					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Student ID: "+ student.getStudentId(user)+ "|Student Group ID: "+ student.getStudentGroup(user)).toString();
+					tab[i] = new StringBuilder("Login : "+user.getLogin(user)+" | First Name : "+user.getFirstName(user) +"|Sur Name: " +user.getPassword(user)+ "| Type: "+user.getType(user) + "|Student ID: "+ ((Student) user).getStudentId(user)+ "|Student Group ID: "+ ((Student) user).getStudentGroup(user)).toString();
 				}
 				i++; 
 				
@@ -271,7 +264,6 @@ public class UserController implements IUserController
 		return tab;
 	}
 
-	@Override
 	public String[] usersLoginToString() {
 		String[] tab = new String[userDB.size_UserDB()]; 
 		try {
@@ -291,7 +283,6 @@ public class UserController implements IUserController
 		return tab;
 	}
 
-	@Override
 	public String[] studentsLoginToString() {
 		String[] tab = new String[userDB.size_UserDB()]; 
 		try {
@@ -314,7 +305,6 @@ public class UserController implements IUserController
 		return tab;
 	}
 
-	@Override
 	public String[] groupsIdToString() {
 		String[] tab = new String[userDB.size_UserDB()]; 
 		try {
@@ -335,7 +325,6 @@ public class UserController implements IUserController
 		return tab;
 	}
 
-	@Override
 	public String[] groupsToString() {
 		String[] tab = new String[userDB.size_UserDB()]; 
 		try {
@@ -356,12 +345,11 @@ public class UserController implements IUserController
 		return tab;
 	}
 
-	@Override
 	public boolean loadDB() {
 
 		boolean result = true;
 		try {
-			this.userDB.loadDB();
+			userDB.loadDB();
 		}catch(Exception e) {
 			System.out.println("The database could not be loaded properly: " + e);
 			result = false;
@@ -369,10 +357,15 @@ public class UserController implements IUserController
 		return result;
 	}
 
-	@Override
 	public boolean saveDB() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = true;
+		try {
+			userDB.saveDB();
+		}catch(Exception e) {
+			System.out.println("The database could not be saved properly: " + e);
+			result = false;
+		}
+		return result;
 	}
 
 	public UserDB getUserDB() {
@@ -382,8 +375,6 @@ public class UserController implements IUserController
 	public void setUserDB(UserDB userDB) {
 		this.userDB = userDB;
 	}
-	
-	
 
 }
 

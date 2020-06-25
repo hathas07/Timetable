@@ -1,44 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<UsersDB>
-  <Groups>
-    <Group>
-      <groupId>1</groupId>
-    </Group>
-  </Groups>
-  <Students>
-    <Student>
-      <login>NL</login>
-      <firstname>Nicolas</firstname>
-      <surname>Lepetit</surname>
-      <pwd>prout</pwd>
-      <studentId>2002</studentId>
-      <groupId>-1</groupId>
-    </Student>
-    <Student>
-      <login>BS</login>
-      <firstname>Buffy</firstname>
-      <surname>Summers</surname>
-      <pwd>stake</pwd>
-      <studentId>2001</studentId>
-      <groupId>1</groupId>
-    </Student>
-  </Students>
-  <Teachers>
-    <Teacher>
-      <login>GS</login>
-      <firstname>Grand</firstname>
-      <surname>Schtroumpf</surname>
-      <pwd>salsepareille</pwd>
-      <teacherId>1001</teacherId>
-    </Teacher>
-    <Teacher>
-      <login>MF</login>
-      <firstname>Morgan</firstname>
-      <surname>Freeman</surname>
-      <pwd>iknowall</pwd>
-      <teacherId>1002</teacherId>
-    </Teacher>
-  </Teachers>
+<TimeTablesDB>
   <Administrators>
     <Administrator>
       <login>KR</login>
@@ -62,4 +23,56 @@
       <adminId>0</adminId>
     </Administrator>
   </Administrators>
-</UsersDB>
+  <Teachers>
+    <Teacher>
+      <login>GS</login>
+      <firstname>Grand</firstname>
+      <surname>Schtroumpf</surname>
+      <pwd>salsepareille</pwd>
+      <teacherId>1001</teacherId>
+    </Teacher>
+    <Teacher>
+      <login>MF</login>
+      <firstname>Morgan</firstname>
+      <surname>Freeman</surname>
+      <pwd>iknowall</pwd>
+      <teacherId>1002</teacherId>
+    </Teacher>
+  </Teachers>
+  <Students>
+    <Student>
+      <login>NL</login>
+      <firstname>Nicolas</firstname>
+      <surname>Lepetit</surname>
+      <pwd>prout</pwd>
+      <studentId>2002</studentId>
+      <groupId>2</groupId>
+    </Student>
+    <Student>
+      <login>BS</login>
+      <firstname>Buffy</firstname>
+      <surname>Summers</surname>
+      <pwd>stake</pwd>
+      <studentId>2001</studentId>
+      <groupId>1</groupId>
+    </Student>
+    <Student>
+      <login>LN</login>
+      <firstname>Lila</firstname>
+      <surname>Nickler</surname>
+      <pwd>pwd</pwd>
+      <studentId>2003</studentId>
+      <groupId>1</groupId>
+    </Student>
+  </Students>
+  <Groups>
+    <Group>
+      <groupId>2</groupId>
+      <nbStudent>2</nbStudent>
+    </Group>
+    <Group>
+      <groupId>1</groupId>
+      <nbStudent>4</nbStudent>
+    </Group>
+  </Groups>
+</TimeTablesDB>
