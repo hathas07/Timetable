@@ -29,10 +29,10 @@ public class MainFrame extends JFrame{
         this.userController = userController;
         this.timeTableController = tTController;
         
-        String[] userInfo =  userController.usersToString();
+        String[] userInfo =  this.userController.usersToString();
         for(String user : userInfo) {System.out.println(user);}
         
-        String[] groupsInfo =  userController.groupsToString();
+        String[] groupsInfo =  this.userController.groupsToString();
         for(String group : groupsInfo) {System.out.println(group);}
         
         String[] roomInfo = tTController.roomsToString();

@@ -326,7 +326,7 @@ public class UserController implements IUserController
 	}
 
 	public String[] groupsToString() {
-		String[] tab = new String[userDB.size_UserDB()]; 
+		String[] tab = new String[userDB.getGroups().size()]; 
 		try {
 			int i = 0; 
 			for (Group group : userDB.getGroups())
