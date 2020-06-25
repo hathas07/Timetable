@@ -59,7 +59,7 @@ public class UserController implements IUserController
 		try {
 			
 		User user = userDB.getUser(userLogin);
-		if (user.getPassword(user) == userPwd)
+		if (user.getPassword(user).equals(userPwd))
 		{
 			result = user.getType(user);
 		}
