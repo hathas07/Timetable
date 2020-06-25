@@ -6,19 +6,15 @@ import javax.naming.LimitExceededException;
 import javax.swing.*;
 
 import java.awt.event.*;
-import java.sql.Savepoint;
-import java.time.LocalDate;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Hashtable;
-import java.util.Set;
 
-import timeTableController.ITimeTableController;
 import timeTableController.TimeTableController;
 import userController.UserController;
 
+//teachier view se base sur studentview, suel les nouveaux éléments seront commentés
 public class TeacherView extends JFrame {
 	private UserController userController;
 	private TimeTableController timeTableController;
@@ -41,8 +37,6 @@ public class TeacherView extends JFrame {
 	String userLogin="";
 	String[] groups= {""};
 	JComboBox<String> groupBox= new JComboBox<>(groups);
-
-
 	
 	public TeacherView(UserController userController,TimeTableController tTController, String login){
 		super("Student Timetable");
@@ -52,7 +46,7 @@ public class TeacherView extends JFrame {
         setLocationRelativeTo(null);
         this.userController = userController;
         this.timeTableController = tTController;
-        userLogin=login;
+        userLogin=login; //on recupere le login du professeur connecté
         
         String[] userInfo =  userController.usersToString();
         for(String user : userInfo) {System.out.println(user);}
@@ -64,7 +58,7 @@ public class TeacherView extends JFrame {
         setLayout(new BorderLayout());
         
         currentMonday = getCurrentMonday();
-		groups= userController.groupsIdToString();
+		groups= userController.groupsIdToString(); //on recupere tous les groupes existants
 
         
         createTop();
@@ -101,9 +95,11 @@ public class TeacherView extends JFrame {
 	}
 	
 	private void createTop() {
+		//JPanels
 		JPanel groupPanel = new JPanel();
 		JPanel boutons = new JPanel();
 		
+		//JLabels
 		JLabel groupLabel = new JLabel("Choose the group of your students :   ", SwingConstants.RIGHT);
 		JLabel hourLabel = new JLabel("From: ");
 		JLabel to = new JLabel("To: ");
@@ -118,9 +114,9 @@ public class TeacherView extends JFrame {
 		
 		JTextField idTxt = new JTextField(5);
 
-		
 		JMenuBar menuBar = createMenuBar();
 		
+		//boutons
 		JButton book = new JButton("Book a time slot");
 		JButton unbook = new JButton("Unbook a time slot");
 		JButton cancel = new JButton("Cancel");
@@ -130,10 +126,10 @@ public class TeacherView extends JFrame {
 		JButton refresh = new JButton("Refresh");
 
 
-
 		groups= userController.groupsIdToString();
 		groupBox= new JComboBox<>(groups);
 		
+		//comboBox
 		String[] hoursTabBegin = {"8","9","10","11","12","13","14","15","16","17"};
 		String[] hoursTabEnd = {"8","9","10","11","12","13","14","15","16","17","18"};
 		String[] dayTab = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
@@ -150,51 +146,64 @@ public class TeacherView extends JFrame {
 		JComboBox<String> year= new JComboBox<>(yearTab);
 		JComboBox<String> room= new JComboBox<>(roomTab);
 
-		
-
-
-		//F5
+		//refresh
 		top.removeAll();
 		top.updateUI();
 		
-		//event
+		//event bouton de reservation
 		book.addActionListener((event) -> {
+			//affiche les combox de selection de créneaux
 			top.remove(unbookPanel);
 			top.add(bookPanel);
 			top.updateUI();
 			});
+		
+		//event bouton de suppression de reservation
 		unbook.addActionListener((event) -> {
+			//affiche le textfield pour indiquer l'id a supprimer
 			top.remove(bookPanel);
 			top.add(unbookPanel);
 			top.updateUI();
 			});
+		
+		//event bouton d'annulation de reservation
 		cancel.addActionListener((event) -> {
-		//	bookPanel.remove(bookValidation);
+			//refresh
 			top.remove(bookPanel);
 			top.updateUI();
 			createTimeTable();
 
 			});
+		
+		//event bouton d'annulation de suppression de reservation
 		cancel2.addActionListener((event) -> {
-			//bookPanel.remove(unbookValidation);
+			//refresh
 			top.remove(unbookPanel);
 			top.updateUI();
 			createTimeTable();
 
 			});
+		
+		//event bouton refresh
 		refresh.addActionListener((event) -> {
 			top.updateUI();
 			createTimeTable();
 			});
+		
+		//event validation de reservation
 		bookValidation.addActionListener((event) -> {
-			int bookGrp, bookRoom;
-			bookRoom = Integer.parseInt(room.getSelectedItem().toString());
-			bookGrp = Integer.parseInt(groupBox.getSelectedItem().toString());
+			int bookGrp, bookRoom, maxID;
+			bookRoom = Integer.parseInt(room.getSelectedItem().toString()); //recuperation de la room dans sa comboBox
+			bookGrp = Integer.parseInt(groupBox.getSelectedItem().toString()); //recuperation du groupe dans sa comboBox
+			maxID = timeTableController.getBookingsMaxId(bookGrp); //recuperation de l'ID de reservation max
+			
+			//recuperation des dates indiquées dans les comboBox
 			bookDateBegin=setDate(day.getSelectedItem().toString(),month.getSelectedItem().toString(),year.getSelectedItem().toString(),hoursBegin.getSelectedItem().toString(),minBegin.getSelectedItem().toString());
 			bookDateEnd=setDate(day.getSelectedItem().toString(),month.getSelectedItem().toString(),year.getSelectedItem().toString(),hoursEnd.getSelectedItem().toString(),minEnd.getSelectedItem().toString());
-
-			timeTableController.addBooking(bookGrp, DateBegin.size()+10, userLogin, bookDateBegin, bookDateEnd, bookRoom);
 			
+			timeTableController.addBooking(bookGrp, maxID, userLogin, bookDateBegin, bookDateEnd, bookRoom); //ajout du créneau selon les informations rentrées
+			
+			//refresh
 			top.remove(bookPanel);
 			top.updateUI();
 
@@ -202,14 +211,14 @@ public class TeacherView extends JFrame {
 			timeTableController.saveDB(); 
 			createTimeTable();
 		});
+		
+		//validation d'une annulation de reservation
 		unbookValidation.addActionListener((event) -> {
 			int bookGrp, bookID;
-			bookID=Integer.parseInt(idTxt.getText());
-			System.out.println(bookID);
-			bookGrp = Integer.parseInt(groupBox.getSelectedItem().toString());
+			bookID=Integer.parseInt(idTxt.getText()); //recuperation de l'ID de la reservation a supprimer dans sa comboBox
+			bookGrp = Integer.parseInt(groupBox.getSelectedItem().toString()); //recuperation du groupe dans sa comboBox
 			
-			
-			timeTableController.removeBook(bookGrp, bookID);
+			timeTableController.removeBook(bookGrp, bookID); //on retire le créneau dont l'ID a été tapé dans l'emploi du temps sélectionné
 			
 			top.remove(unbookPanel);
 			top.updateUI();
@@ -221,15 +230,13 @@ public class TeacherView extends JFrame {
 
 
 		
-		//structure
+		//ajout des éléments au differents panels
 		boutons.add(book);
 		boutons.add(unbook);
 		boutons.add(refresh);
 		
 		groupPanel.add(groupLabel);
 		groupPanel.add(groupBox);
-		
-		
 		
 		bookPanel.add(dayLab);
 		bookPanel.add(day);
@@ -259,17 +266,16 @@ public class TeacherView extends JFrame {
 
 
 		
-		
+		//ajout du menu + des panels de bases
 		top.add(menuBar);
 		top.add(groupPanel);
 		top.add(boutons);
-		//top.add(bookPanel);
 		this.add(top,BorderLayout.NORTH);
 	}
 	
 	
 	
-	//test fonction
+	//fonction permettant de definir une date a partir de son numéro son mois son année son heure et ses minutes en string
 	@SuppressWarnings("deprecation")
 	private Date setDate(String dateNbr, String month, String year, String hours, String minutes) {
 		Date date=new Date();
@@ -330,16 +336,13 @@ public class TeacherView extends JFrame {
 		int compteur4=0;
 		int grpID=1;
         int year,month,dayNbr,day,hour,min;
-		int currentMondayNbr = currentMonday.getDate();
-		int currentMonth = currentMonday.getMonth();
-		int currentYear = currentMonday.getYear();
 		double heureComplet=0;
 		Date limitDate1, limitDate2;
 		String heureTxt;
 		String[] id;
 		boolean[] isEmpty = {true,true,true,true,true}; //test pour chaque jour
 		
-		grpID=Integer.parseInt(groupBox.getSelectedItem().toString());
+		grpID=Integer.parseInt(groupBox.getSelectedItem().toString()); //on recupere l'emploi du temps du groupe selectionné dans la comboBox
 		timeTable.removeAll();
 		timeTable.updateUI();
 
@@ -348,13 +351,9 @@ public class TeacherView extends JFrame {
         timeTableController.loadDB(); 
         DateBegin.clear();
         DateEnd.clear();
-        timeTableController.getBookingsDate(grpID, DateBegin, DateEnd); //remplacer le 1 !
-        System.out.println(DateBegin);
-     //   System.out.println(DateEnd);
+        timeTableController.getBookingsDate(grpID, DateBegin, DateEnd); //obtientien des créneaux lié au groupe séléectionné
         timeTableController.saveDB(); 
 
-   
-		
 		timeTable.add(new JLabel("<html>Day:<br><br>Hour:</html>", SwingConstants.CENTER));
 		
 		//jours
@@ -375,8 +374,7 @@ public class TeacherView extends JFrame {
 					     limitDate1 =new Date(currentMonday.getTime() - (1000*60*60*24*1));
 					     limitDate2 =new Date(currentMonday.getTime() + (1000*60*60*24*6));
 					  
-					     id=timeTableController.booksIdToString(grpID);
-					   //  System.out.println("id: "+id[index]);
+					     id=timeTableController.booksIdToString(grpID); //on obtient l'ID de réservation
 					     
 					     year = date.getYear();
 					     month=date.getMonth();
@@ -389,7 +387,7 @@ public class TeacherView extends JFrame {
 			        	 if(heureComplet==firstHour && day==j  && date.after(limitDate1) && date.before(limitDate2)) {
 			        		isEmpty[j-1]=false;
 			 				heureTxt = String.valueOf(heureComplet+"h");
-							btn.setText("ID:"+id[index]+"   "+heureTxt);
+							btn.setText("ID:"+id[index]+"   "+heureTxt); //on affiche l'ID de réservation 
 			        	 }
 			        	 index++;
 			      }
@@ -470,7 +468,7 @@ public class TeacherView extends JFrame {
 	}
 	
 	private void ActionMenuBar(String text) {
-		System.out.println(text);
+		//System.out.println(text);
 		if(text.equals("Logout")) {
 			timeTableController.saveDB();
 			new MainFrame(userController, timeTableController);
