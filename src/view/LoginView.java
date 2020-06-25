@@ -79,30 +79,37 @@ public class LoginView extends JFrame{
 		
 		//on ouvre la fenetre correspondant au role entré 
 		switch(loginRole) {
-			case "Administrator":
-				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
-				this.dispose();
-				break;
+		case "Administrator":
+			new AdminView(userController, timeTableController, enteredLogin);
+			JOptionPane.showMessageDialog(LoginView.this, "Connecting:Admin");
+			this.dispose();
+			break;
+		
+		case "Teacher":
+			new TeacherView(userController, timeTableController, enteredLogin);
+			JOptionPane.showMessageDialog(LoginView.this, "Connecting:Teacher");
+			this.dispose();
+			break;
 			
-			case "Teacher":
-				new TeacherView(userController, timeTableController, enteredLogin);
-				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Teacher");
-				this.dispose();
-				break;
-				
-			case "Student":
+		case "Student":
+			int group = userController.getStudentGroup(enteredLogin);
+			if(group != -1) {
 				new StudentView(userController, timeTableController, userController.getStudentGroup(enteredLogin));
 				JOptionPane.showMessageDialog(LoginView.this, "Connecting:Student");
-				this.dispose();
-				break;
-				
-			//en cas de non correspondance	
-			default:
+			}else {
 				new MainFrame(userController, timeTableController);
-				JOptionPane.showMessageDialog(LoginView.this, "Wrong Login/Password", "Error", JOptionPane.INFORMATION_MESSAGE);
-				this.dispose();
+				JOptionPane.showMessageDialog(LoginView.this, "No group associated", "Error", JOptionPane.INFORMATION_MESSAGE);
+			}
+			this.dispose();
+			break;
+			
+			//En cas de non correspondance
+		default:
+			new MainFrame(userController, timeTableController);
+			JOptionPane.showMessageDialog(LoginView.this, "Wrong Login/Password", "Error", JOptionPane.INFORMATION_MESSAGE);
+			this.dispose();
 
-		}
+	}
 		
 	}
 
