@@ -55,5 +55,17 @@ public class Student extends User {
 		student.groupId = grp.getGroupId(group) ;
 		group.studentNb ++;  
 	}
+	
+	/**
+	 * Permet de supprimer le groupe affilié à un étudiant
+	 * @param group
+	 * 
+	 */
+	public void DeleteStudentGroupId (Group group)
+	{
+		
+		this.groupId = -1 ;
+		group.studentNb --;  
+	}
 
 }

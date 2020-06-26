@@ -2,6 +2,8 @@ package userController;
 
 
 
+import timeTableModel.Booking;
+import timeTableModel.TimeTable;
 import userModel.*;
 /**
  * Cette classe est le contrôleur d'utilisateurs que vous devez implémenter. 
@@ -201,6 +203,17 @@ public class UserController implements IUserController
 		try {
 				if (admin.getType(admin) == "Administrator")// Si la personne qui souhaite supprimer un nouveau groupe est bien un administrateur
 				{
+					//On supprime les affiliations � ce groupe chez les students : 
+					for(User utilisateur : this.userDB.getUsers()) {
+						if(utilisateur.getType(utilisateur).equals("Student")) {
+							Student student = (Student) utilisateur;
+							if(student.getStudentGroup(student) == groupId) {
+								Group group = this.userDB.getGroup(groupId);
+								student.DeleteStudentGroupId(group);
+							}
+						}
+					}
+					
 					userDB.removeGroup(groupId);
 					result = true;
 					
@@ -231,7 +244,12 @@ public class UserController implements IUserController
 						group = userDB.getGroup(groupId);
 
 					}
+					
 					student = userDB.getStudent(studentLogin);
+					if(student.getStudentGroup(student) != -1) {
+						Group oldgroup = userDB.getGroup(student.getStudentGroup(student)); 
+						student.DeleteStudentGroupId(oldgroup);
+					}
 					student.addStudentToGroup(student,group);
 					result = true;
 					

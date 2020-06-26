@@ -70,21 +70,29 @@
       <surname>test</surname>
       <pwd>test</pwd>
       <studentId>99</studentId>
-      <groupId>-1</groupId>
+      <groupId>12</groupId>
+    </Student>
+    <Student>
+      <login>ssss</login>
+      <firstname>test</firstname>
+      <surname>teset</surname>
+      <pwd>515</pwd>
+      <studentId>12</studentId>
+      <groupId>12</groupId>
     </Student>
   </Students>
   <Groups>
     <Group>
-      <groupId>8</groupId>
-      <nbStudent>0</nbStudent>
+      <groupId>2</groupId>
+      <nbStudent>1</nbStudent>
     </Group>
     <Group>
-      <groupId>2</groupId>
+      <groupId>12</groupId>
       <nbStudent>2</nbStudent>
     </Group>
     <Group>
       <groupId>1</groupId>
-      <nbStudent>4</nbStudent>
+      <nbStudent>2</nbStudent>
     </Group>
   </Groups>
 </TimeTablesDB>
