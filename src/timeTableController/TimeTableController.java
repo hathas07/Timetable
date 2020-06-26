@@ -208,7 +208,10 @@ public class TimeTableController implements ITimeTableController{
 	public boolean addBooking(int timeTableId, int bookingId, String login, Date dateBegin, Date dateEnd, int roomId) {
 		boolean result = true;
 		try {
-			
+			//On vérifie que la date de début est bien inférieur à la date de fin 
+			if(dateEnd.compareTo(dateBegin) < 0) {
+				throw new Exception("Impossible d'inserer la reservation : La date de fin doit être strictement suppérieur à la date de début.");
+			}
 			for(Booking booking: this.tTDB.GetTimeTable(timeTableId).getBookingDB().values()) {
 				//On cherche si deux résevations se chechauvent pour un groupe
 				if(dateBegin.compareTo(booking.getDateBegin()) >= 0  && dateBegin.compareTo(booking.getDateEnd()) < 0 ||
