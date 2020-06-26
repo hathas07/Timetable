@@ -296,8 +296,9 @@ public class AdminView extends JFrame {
 		
 		confirm.addActionListener((event) -> {
 			int selectedGroup = Integer.parseInt(listGroup.getSelectedValue());
-			String selectedStudent = listUsers.getSelectedValue();
-			this.userController.associateStudToGroup(this.adminLogin, selectedStudent, selectedGroup);
+			List<String> selectedStudents = new ArrayList<String>();
+			selectedStudents = listUsers.getSelectedValuesList();
+			for(String student : selectedStudents) {this.userController.associateStudToGroup(this.adminLogin, student, selectedGroup);}
 			inputData.dispose();
 		});
 	}

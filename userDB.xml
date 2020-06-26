@@ -46,7 +46,7 @@
       <surname>Nickler</surname>
       <pwd>pwd</pwd>
       <studentId>2003</studentId>
-      <groupId>1</groupId>
+      <groupId>12</groupId>
     </Student>
     <Student>
       <login>BS</login>
@@ -54,7 +54,7 @@
       <surname>Summers</surname>
       <pwd>stake</pwd>
       <studentId>2001</studentId>
-      <groupId>1</groupId>
+      <groupId>12</groupId>
     </Student>
     <Student>
       <login>NL</login>
@@ -87,12 +87,12 @@
       <nbStudent>1</nbStudent>
     </Group>
     <Group>
-      <groupId>12</groupId>
-      <nbStudent>2</nbStudent>
+      <groupId>1</groupId>
+      <nbStudent>0</nbStudent>
     </Group>
     <Group>
-      <groupId>1</groupId>
-      <nbStudent>2</nbStudent>
+      <groupId>12</groupId>
+      <nbStudent>4</nbStudent>
     </Group>
   </Groups>
 </TimeTablesDB>
