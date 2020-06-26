@@ -1,5 +1,6 @@
-/userController/
+/main/
 /timeTableController/
+/timeTableModel/
+/userController/
 /userModel/
 /view/
-/main/

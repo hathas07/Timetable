@@ -166,11 +166,16 @@ public class AdminView extends JFrame {
 
 		//Action bouton
 		btConfirm.addActionListener((event) -> {
-			int roomID = Integer.parseInt(tfRoomID.getText());
-			int roomCapacity = Integer.parseInt(tfRoomCapacity.getText());
-			this.timeTableController.addRoom(roomID, roomCapacity);
-			this.timeTableController.saveDB();
-			inputData.dispose();
+			try {
+				int roomID = Integer.parseInt(tfRoomID.getText());
+				int roomCapacity = Integer.parseInt(tfRoomCapacity.getText());
+				this.timeTableController.addRoom(roomID, roomCapacity);
+				this.timeTableController.saveDB();
+				inputData.dispose();
+			}
+			catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(AdminView.this, "Enter valid numbers", "Error", JOptionPane.INFORMATION_MESSAGE);
+			}
 		});
 
 	}
@@ -222,10 +227,14 @@ public class AdminView extends JFrame {
 		
 		//Action bouton
 		btConfirm.addActionListener((event) -> {
-			int groupID = Integer.parseInt(tfGroupID.getText());
-			this.userController.addGroup(this.adminLogin, groupID);
-			this.timeTableController.addTimeTable(groupID);
-			inputData.dispose();
+			try {
+				int groupID = Integer.parseInt(tfGroupID.getText());
+				this.userController.addGroup(this.adminLogin, groupID);
+				this.timeTableController.addTimeTable(groupID);
+				inputData.dispose();
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(AdminView.this, "Enter valid numbers", "Error", JOptionPane.INFORMATION_MESSAGE);
+			}
 		});
 	}
 	
@@ -269,7 +278,7 @@ public class AdminView extends JFrame {
 		
 		String[] infoUser = this.userController.studentsLoginToString();
 		JList<String> listUsers = new JList<String>(infoUser);
-		listUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listUsers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		listUsers.setPreferredSize(new Dimension(100, 200));
 		contentPane.add(new JScrollPane(listUsers));
 		
@@ -341,26 +350,30 @@ public class AdminView extends JFrame {
 		
 		//Action bouton
 		btConfirm.addActionListener((event) -> {
-			int id = Integer.parseInt(tfID.getText());
-			String login = tfLogin.getText();
-			String name = tfName.getText();
-			String surname = tfSurname.getText();
-			String pwd = pfPwd.getText();
-			switch(rank) {
-				case "Student":
-					this.userController.addStudent(this.adminLogin, login, id, name, surname, pwd);
-					break;
-				
-				case "Admin":
-					this.userController.addAdmin(this.adminLogin, login, id, name, surname, pwd);
-					break;
+			try {
+				int id = Integer.parseInt(tfID.getText());
+				String login = tfLogin.getText();
+				String name = tfName.getText();
+				String surname = tfSurname.getText();
+				String pwd = pfPwd.getText();
+				switch(rank) {
+					case "Student":
+						this.userController.addStudent(this.adminLogin, login, id, name, surname, pwd);
+						break;
 					
-				case "Teacher":
-					this.userController.addTeacher(this.adminLogin, login, id, name, surname, pwd);
-					break;
+					case "Admin":
+						this.userController.addAdmin(this.adminLogin, login, id, name, surname, pwd);
+						break;
+						
+					case "Teacher":
+						this.userController.addTeacher(this.adminLogin, login, id, name, surname, pwd);
+						break;
+				}
+				this.userController.saveDB();
+				inputData.dispose();				
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(AdminView.this, "Enter valid numbers", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
-			this.userController.saveDB();
-			inputData.dispose();
 		});
 	}
 	
@@ -398,7 +411,6 @@ public class AdminView extends JFrame {
 		window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		window.setType(Window.Type.UTILITY);
 		window.setResizable(false);
-		window.setAlwaysOnTop(true);
 		window.setVisible(true);
 		window.setSize(300, windowLength);
 		window.setLocationRelativeTo(null);		
